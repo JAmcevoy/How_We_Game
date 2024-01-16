@@ -35,6 +35,17 @@ def user_questions():
         print("Invalid choice. Please choose a number between 1 and 10.")
         satisfaction_rating = int(input("On a scale of 1 to 10, how satisfied are you with your current gaming console? (1-10): "))
 
+    print("Third Question...")
+
+    
+    age_group = input("What is your age group? A)18-24 B)25-34 C)35-44 D)45+ : ").upper()
+    while age_group not in {'A', 'B', 'C', 'D'}:
+        print("Invalid choice. Please choose A, B, C, or D.")
+        age_group = input("What is your age group? A)18-24 B)25-34 C)35-44 D)45+ : ").upper()
+    
+    print("Final Question...")
+
+
     
 user_questions()
 
