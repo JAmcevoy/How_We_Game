@@ -107,32 +107,40 @@ def update_worksheet(data, worksheet_name):
 
 
 def console_count():
-    console_column = SHEET.sheet1.col_values(1)[1:]
+    try:
+        console_column = GSPREAD_CLIENT.open(SHEET_NAME).sheet1.col_values(1)[1:]
 
-    xbox_count = console_column.count('Xbox')
-    playstation_count = console_column.count('PlayStation')
-    nintendo_count = console_column.count('Nintendo')
-    pc_count = console_column.count('PC')
+        xbox_count = console_column.count('Xbox')
+        playstation_count = console_column.count('PlayStation')
+        nintendo_count = console_column.count('Nintendo')
+        pc_count = console_column.count('PC')
 
-    print("Number of users for each console")
-    print(f"Xbox: {xbox_count}")
-    print(f"Playstation: {playstation_count}")
-    print(f"Nintendo: {nintendo_count}")
-    print(f"PC: {pc_count}")
+        print("Number of users for each console")
+        print(f"Xbox: {xbox_count}")
+        print(f"Playstation: {playstation_count}")
+        print(f"Nintendo: {nintendo_count}")
+        print(f"PC: {pc_count}")
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Failed to retrieve console count. Please try again.\n")
 
 
 def get_rating():
-    satisfaction_column = SHEET.sheet1.col_values(2)[1:]
-    high_or_low = input("How many Higher than 5 or lower than 5? (Higher/Lower): ")
+    try:
+        satisfaction_column = GSPREAD_CLIENT.open(SHEET_NAME).sheet1.col_values(2)[1:]
+        high_or_low = input("How many Higher than 5 or lower than 5? (Higher/Lower): ").lower()
 
-    if high_or_low.lower() == "higher":
-        above_5_count = sum(1 for rating in satisfaction_column if int(rating) > 5)
-        print(f"Number of users with a rating above 5: {above_5_count}")
-    elif high_or_low.lower() == "lower":
-        below_5_count = sum(1 for rating in satisfaction_column if int(rating) < 5)
-        print(f"Number of users with a rating below 5: {below_5_count}")
-    else:
-        print("Invalid Choice. Please choose higher or lower than 5")
+        if high_or_low == "higher":
+            above_5_count = sum(1 for rating in satisfaction_column if int(rating) > 5)
+            print(f"Number of users with a rating above 5: {above_5_count}")
+        elif high_or_low == "lower":
+            below_5_count = sum(1 for rating in satisfaction_column if int(rating) < 5)
+            print(f"Number of users with a rating below 5: {below_5_count}")
+        else:
+            raise ValueError("Invalid Choice. Please choose higher or lower than 5")
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Failed to retrieve rating count. Please try again.\n")
 
 user_login()
 data = user_questions()
