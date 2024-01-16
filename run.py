@@ -13,27 +13,17 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('how_we_game')
 
-def ask_preferred_console():
-    print("What is your preferred gaming console brand?")
-    print("A. Xbox")
-    print("B. PlayStation")
-    print("C. Nintendo")
-    print("D. Other")
+import csv
 
-    user_choice = input("Enter the letter corresponding to your choice: ").upper()
-
-    if user_choice == 'A':
-        return "Xbox"
-    elif user_choice == 'B':
-        return "PlayStation"
-    elif user_choice == 'C':
-        return "Nintendo"
-    elif user_choice == 'D':
-        other_specify = input("Please specify the other gaming console brand: ")
-        return f"Other: {other_specify}"
-    else:
-        print("Invalid choice. Please enter a valid letter.")
-        return ask_preferred_console()
+def user_questions():
     
-ask_preferred_console()
+    print("Welcome How We Game Survey")
+    print("first question is...")
+    console_brand = input("What is your preferred gaming console brand? A)Xbox B)PlayStation C)Nintendo D)PC : ").upper()
+    while console_brand not in {'A', 'B', 'C', 'D'}:
+        print("Invalid choice. Please choose A, B, C, or D.")
+        console_brand = input("What is your preferred gaming console brand? (A/B/C/D): ").upper()
+
+    
+user_questions()
 
