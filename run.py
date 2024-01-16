@@ -77,12 +77,12 @@ def admin_questions():
 
 
 def user_login():
-    user_type = input("Which user type do you wish to continue with? User or Admin: ")
+    user_type = input("Which user type do you wish to continue with? User or Admin: ").lower()
 
-    if user_type.lower() == "user":
+    if user_type == "user":
         while not user_questions():
             print("Let's try again.")
-    elif user_type.lower() == "admin":
+    elif user_type == "admin":
         admin_password = input("Enter the admin password: ")
         
         if admin_password == 'Letsgame24!':
@@ -94,14 +94,15 @@ def user_login():
 
 
 def update_worksheet(data, worksheet_name):
-    """
-    Receives a list submissions to be inserted into a worksheet
-    Update the relevant worksheet with the data provided
-    """
-    print(f"Updating {worksheet_name} worksheet...\n")
-    worksheet_to_update = SHEET.worksheet(worksheet_name)
-    SHEET.append_row(data)
-    print(f"{worksheet_name} worksheet updated successfully\n")
+    try:
+        print(f"Updating {worksheet_name} worksheet...\n")
+        worksheet_to_update = GSPREAD_CLIENT.open(SHEET_NAME).worksheet(worksheet_name)
+        GSPREAD_CLIENT.insert_row(data, index=2, worksheet=worksheet_to_update)
+        print(f"{worksheet_name} worksheet updated successfully\n")
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Failed to update worksheet. Please try again.\n")
+
         
 
 
