@@ -14,49 +14,39 @@ SHEET = GSPREAD_CLIENT.open('how_we_game')
 
 
 def user_questions():
-    """
-    Holds all the questions for the survey
-    """
-
     while True:
         print("Welcome How We Game Survey")
-        print("First question is...")
-
-        console_brand = input("What is your preferred gaming console brand? A)Xbox B)PlayStation C)Nintendo D)PC : ").upper()
-        while console_brand not in {'A', 'B', 'C', 'D'}:
-            print("Invalid choice. Please choose A, B, C, or D.")
+        try:
             console_brand = input("What is your preferred gaming console brand? A)Xbox B)PlayStation C)Nintendo D)PC : ").upper()
-
-        print("Second question...")
-
-        satisfaction_rating = int(input("On a scale of 1 to 10, how satisfied are you with your current gaming console? (1-10): "))
-        while satisfaction_rating < 1 or satisfaction_rating > 10:
-            print("Invalid choice. Please choose a number between 1 and 10.")
+            if console_brand not in {'A', 'B', 'C', 'D'}:
+                raise ValueError("Invalid choice. Please choose A, B, C, or D.")
+            
             satisfaction_rating = int(input("On a scale of 1 to 10, how satisfied are you with your current gaming console? (1-10): "))
-
-        print("Third Question...")
-
-        age_group = input("What is your age group? A)18-24 B)25-34 C)35-44 D)45+ : ").upper()
-        while age_group not in {'A', 'B', 'C', 'D'}:
-            print("Invalid choice. Please choose A, B, C, or D.")
+            if not (1 <= satisfaction_rating <= 10):
+                raise ValueError("Invalid choice. Please choose a number between 1 and 10.")
+            
             age_group = input("What is your age group? A)18-24 B)25-34 C)35-44 D)45+ : ").upper()
-
-        print("Final Question...")
-
-        loyalty_choice = input("How likely are you to stick with your current gaming console brand for your next purchase? A)Likely B)Neutral C)Unlikely : ").upper()
-        while loyalty_choice not in {'A', 'B', 'C'}:
-            print("Invalid choice. Please choose A, B, or C.")
+            if age_group not in {'A', 'B', 'C', 'D'}:
+                raise ValueError("Invalid choice. Please choose A, B, C, or D.")
+            
             loyalty_choice = input("How likely are you to stick with your current gaming console brand for your next purchase? A)Likely B)Neutral C)Unlikely : ").upper()
+            if loyalty_choice not in {'A', 'B', 'C'}:
+                raise ValueError("Invalid choice. Please choose A, B, or C.")
 
-        check_answers = input(f"Are you sure these are your final answers? Q1){console_brand} Q2){satisfaction_rating} Q3){age_group} Q4){loyalty_choice} : ")
+            check_answers = input(f"Are you sure these are your final answers? Q1){console_brand} Q2){satisfaction_rating} Q3){age_group} Q4){loyalty_choice} : ")
+            
+            if check_answers.lower() == "yes":
+                print("Thank you for completing the survey!")
+                return [console_brand, satisfaction_rating, age_group, loyalty_choice]
+            elif check_answers.lower() == "no":
+                return None
+            else:
+                raise ValueError("Please select yes or no.")
+        
+        except ValueError as ve:
+            print(f"Error: {ve}")
+            print("Please provide valid input.\n")
 
-        if check_answers.lower() == "yes":
-            print("Thank you for completing the survey!")
-            return True
-        elif check_answers.lower() == "no":
-            return False
-        else:
-            print("Please Select yes or no")
 
 
 def admin_questions():
@@ -102,6 +92,17 @@ def user_login():
             print("Incorrect password. Access denied.")
     else:
         print("Invalid User. Please select User or Admin.")
+
+
+def update_worksheet(data, worksheet_name):
+    """
+    Receives a list submissions to be inserted into a worksheet
+    Update the relevant worksheet with the data provided
+    """
+    print(f"Updating {worksheet_name} worksheet...\n")
+    worksheet_to_update = SHEET.worksheet(worksheet_name)
+    SHEET.append_row(data)
+    print(f"{worksheet_name} worksheet updated successfully\n")
         
 
 
@@ -122,7 +123,7 @@ def console_count():
 
 def get_rating():
     satisfaction_column = SHEET.sheet1.col_values(2)[1:]
-    high_or_low = input("How many users gave a rating greater than 5 or less than 5? (Higher/Lower): ")
+    high_or_low = input("How many Higher than 5 or lower than 5? (Higher/Lower): ")
 
     if high_or_low.lower() == "higher":
         above_5_count = sum(1 for rating in satisfaction_column if int(rating) > 5)
@@ -134,3 +135,7 @@ def get_rating():
         print("Invalid Choice. Please choose higher or lower than 5")
 
 user_login()
+data = user_questions()
+ata = user_questions()
+worksheet_name = "how_we_game"
+update_worksheet(data, worksheet_name)
