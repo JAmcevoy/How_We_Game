@@ -43,7 +43,15 @@ def user_questions():
         print("Invalid choice. Please choose A, B, C, or D.")
         age_group = input("What is your age group? A)18-24 B)25-34 C)35-44 D)45+ : ").upper()
     
+    
     print("Final Question...")
+
+
+    loyalty_choice = input("How likely are you to stick with your current gaming console brand for your next purchase? A)Likely B)Neutral C)Unlikely : ").upper()
+    while loyalty_choice not in {'A', 'B', 'C'}:
+        print("Invalid choice. Please choose A, B, or C.")
+        loyalty_choice = input("How likely are you to stick with your current gaming console brand for your next purchase? 
+").upper()
 
 
     
