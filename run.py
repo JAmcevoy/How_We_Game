@@ -144,6 +144,5 @@ def get_rating():
 
 user_login()
 data = user_questions()
-ata = user_questions()
 worksheet_name = "how_we_game"
 update_worksheet(data, worksheet_name)
