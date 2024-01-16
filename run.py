@@ -44,7 +44,13 @@ def user_questions():
         print("Invalid choice. Please choose A, B, or C.")
         loyalty_choice = input("How likely are you to stick with your current gaming console brand for your next purchase? A)Likely B)Neutral C)Unlikely : ").upper()
 
-# def admin_questions():
+
+def admin_questions():
+
+    print("Welcome to How We Game Admin Panel!")
+    print("Please confirm Yes/No to the following query you wish to run!")
+
+    console_count = input("What is the number of users for each console?" )
 
     
 
@@ -58,5 +64,21 @@ def user_login():
         admin_questions()
     else:
         print("Invalid User. Please select User or Admin.")
+
+        if input.lower() == "yes":
+            console_column = SHEET.sheet1.col_values(1)[1:]
+
+                xbox_count = console_column.count('Xbox')
+                playstation_count = console_column.count('PlayStation')
+                nintendo_count = console_column.count('Nintendo')
+                pc_count = console_column.count('PC')
+
+                print(f"Number of users for each console")
+                print(f"Xbox: {xbox_count}")
+                print(f"Playstation: {playstation_count}")
+                print(f"Nintendo: {nintendo_count}")
+                print(f"PC: {pc_count}")
+
+
 
 user_login()
