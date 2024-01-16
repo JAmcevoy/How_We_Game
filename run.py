@@ -50,31 +50,30 @@ def user_questions():
 
 
 def admin_questions():
-    """
-    Holds the admin questions for admin user with password
-    """
     print("Welcome to How We Game Admin Panel!")
     print("Please confirm Yes/No to the following queries you wish to run:")
 
-    # Question 1
-    console_count_input = input("1. What is the number of users for each console? (yes/no): ")
-    if console_count_input.lower() == "yes":
-        console_count()
+    try:
+        console_count_input = input("1. What is the number of users for each console? (yes/no): ").lower()
+        if console_count_input == "yes":
+            console_count()
+        
+        rating_count_input = input("2. How many users gave a rating greater than 5 or less than 5? (yes/no): ").lower()
+        if rating_count_input == "yes":
+            get_rating()
+        
+        age_group_input = input("3. What is the most popular console for each age group? (yes/no): ").lower()
+        if age_group_input == "yes":
+            most_popular_console_by_age()
 
-    # Question 2
-    rating_count_input = input("2. How many users gave a rating greater than 5 or less than 5? (yes/no): ")
-    if rating_count_input.lower() == "yes":
-        get_rating()
+        loyalty_count_input = input("4. How many users are likely to stay with their current console brand? (yes/no): ").lower()
+        if loyalty_count_input == "yes":
+            get_loyalty_count()
 
-    # Question 3
-    age_group_input = input("3. What is the most popular console for each age group? (yes/no): ")
-    if age_group_input.lower() == "yes":
-        most_popular_console_by_age()
+    except Exception as e:
+        print(f"Error: {e}")
+        print("An error occurred. Please try again.\n")
 
-    # Question 4
-    loyalty_count_input = input("4. How many users are likely to stay with their current console brand? (yes/no): ")
-    if loyalty_count_input.lower() == "yes":
-        get_loyalty_count()
 
 
 def user_login():
