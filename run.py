@@ -94,9 +94,15 @@ def user_login():
         while not user_questions():
             print("Let's try again.")
     elif user_type.lower() == "admin":
-        admin_questions()
+        admin_password = input("Enter the admin password: ")
+        
+        if admin_password == 'Letsgame24!':
+            admin_questions()
+        else:
+            print("Incorrect password. Access denied.")
     else:
         print("Invalid User. Please select User or Admin.")
+        
 
 
 def console_count():
