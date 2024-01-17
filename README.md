@@ -49,6 +49,11 @@
 - **Data Persistence:**
     - User survey responses are appended to the Google Sheet for ongoing data analysis.
 
+### Survey Questions:
+- `console_brand`: Preferred gaming console brand (Xbox, PlayStation, Nintendo, PC).
+- `satisfaction_rating`: Satisfaction rating on a scale of 1 to 10.
+- `age_group`: Age group (18-24, 25-34, 35-44, 45+).
+- `loyalty_choice`: Likelihood to stick with the current gaming console brand (Likely, Neutral, Unlikely).
 
 ## Creating the Heroku app
 
