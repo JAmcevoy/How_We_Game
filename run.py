@@ -79,7 +79,7 @@ def admin_questions(SHEET):
             get_rating(SHEET)
 
         while True:
-            loyalty_count_input = input("4. How many users are likely to stay with their current console brand? (yes/no): ").lower()
+            loyalty_count_input = input("3. How many users are likely to stay with their current console brand? (yes/no): ").lower()
             if loyalty_count_input == "yes" or loyalty_count_input == "no":
                 break
             else:
