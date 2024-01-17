@@ -55,6 +55,22 @@
 - `age_group`: Age group (18-24, 25-34, 35-44, 45+).
 - `loyalty_choice`: Likelihood to stick with the current gaming console brand (Likely, Neutral, Unlikely).
 
+## Functions:
+- `handle_invalid_choice()`: Prints a message for invalid choices.
+- `validate_satisfaction_rating(answer)`: Validates the satisfaction rating input.
+- `get_user_choice(prompt, valid_choices)`: Gets and validates user input based on a prompt and valid choices.
+- `user_questions(SHEET)`: Collects user survey responses, validates inputs, and stores the data in a Google Sheet.
+- `admin_questions(SHEET)`: Admin panel to perform various actions based on user input, such as console count, rating count, and loyalty count.
+- `user_login(SHEET)`: Allows users to log in as a regular user or an admin, guiding them through the survey or admin functionalities.
+- `update_worksheet(data, worksheet_name, SHEET)`: Updates the Google Sheet with user survey responses.
+- `console_count(SHEET)`: Counts the number of users for each gaming console and provides the count.
+- `get_rating(SHEET)`: Gets the count of users with ratings higher or lower than a specified threshold.
+- `get_loyalty_count(SHEET)`: Counts the number of users likely to stay with their current console brand and provides the count.
+
+## Constants and Configuration: 
+- ADMIN_PASSWORD: Password to access the admin panel.
+- VALID_CONSOLE_CHOICES: Set of valid choices for console preferences.
+
 ## Creating the Heroku app
 
 When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
