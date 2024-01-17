@@ -159,6 +159,26 @@ def console_count():
         print("Failed to retrieve console count. Please try again.\n")
 
 
+def get_rating():
+    try:
+        satisfaction_column = SHEET.worksheet("submissions").col_values(2)[1:]
+        satisfaction_column = [int(rating) for rating in satisfaction_column]
+
+        high_or_low = input("How many Higher than 5 or lower than 5? (Higher/Lower): ").lower()
+
+        if high_or_low == "higher":
+            above_5_count = sum(1 for rating in satisfaction_column if rating > 5)
+            print(f"Number of users with a rating above 5: {above_5_count}")
+        elif high_or_low == "lower":
+            below_5_count = sum(1 for rating in satisfaction_column if rating < 5)
+            print(f"Number of users with a rating below 5: {below_5_count}")
+        else:
+            raise ValueError("Invalid Choice. Please choose higher or lower than 5")
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Failed to retrieve rating count. Please try again.\n")
+
+
 def most_popular_console_by_age():
     """
     Gets the the most popular console by ages group
