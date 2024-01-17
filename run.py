@@ -114,7 +114,7 @@ def update_worksheet(data, worksheet_name):
         
 def console_count():
     try:
-        console_column = GSPREAD_CLIENT.open(SHEET_NAME).sheet1.col_values(1)[1:]
+        console_column = GSPREAD_CLIENT.open(SHEET).sheet1.col_values(1)[1:]
 
         xbox_count = console_column.count('Xbox')
         playstation_count = console_column.count('PlayStation')
@@ -133,7 +133,7 @@ def console_count():
 
 def get_rating():
     try:
-        satisfaction_column = GSPREAD_CLIENT.open(SHEET_NAME).sheet1.col_values(2)[1:]
+        satisfaction_column = GSPREAD_CLIENT.open(SHEET).sheet1.col_values(2)[1:]
         high_or_low = input("How many Higher than 5 or lower than 5? (Higher/Lower): ").lower()
 
         if high_or_low == "higher":
@@ -151,8 +151,8 @@ def get_rating():
 
 def most_popular_console_by_age():
     try:
-        age_column = GSPREAD_CLIENT.open(SHEET_NAME).sheet1.col_values(3)[1:]
-        console_column = GSPREAD_CLIENT.open(SHEET_NAME).sheet1.col_values(1)[1:]
+        age_column = GSPREAD_CLIENT.open(SHEET).sheet1.col_values(3)[1:]
+        console_column = GSPREAD_CLIENT.open(SHEET).sheet1.col_values(1)[1:]
 
         age_groups = {'A': '18-24', 'B': '25-34', 'C': '35-44', 'D': '45+'}
 
@@ -176,7 +176,7 @@ def most_popular_console_by_age():
 
 def get_loyalty_count():
     try:
-        loyalty_column = GSPREAD_CLIENT.open(SHEET_NAME).sheet1.col_values(4)[1:]
+        loyalty_column = GSPREAD_CLIENT.open(SHEET).sheet1.col_values(4)[1:]
 
         likely_count = loyalty_column.count('A')
         neutral_count = loyalty_column.count('B')
@@ -193,4 +193,5 @@ def get_loyalty_count():
 
 
 user_login()
+data = user_questions()
 update_worksheet(data, 'submissions')
