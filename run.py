@@ -142,6 +142,30 @@ def get_rating():
         print(f"Error: {e}")
         print("Failed to retrieve rating count. Please try again.\n")
 
+def most_popular_console_by_age():
+    try:
+        age_column = GSPREAD_CLIENT.open(SHEET_NAME).sheet1.col_values(3)[1:]
+        console_column = GSPREAD_CLIENT.open(SHEET_NAME).sheet1.col_values(1)[1:]
+
+        age_groups = {'A': '18-24', 'B': '25-34', 'C': '35-44', 'D': '45+'}
+
+        most_popular_console_by_age_group = {}
+
+        for age_group_code, age_group in age_groups.items():
+            age_indices = [i for i, age in enumerate(age_column) if age == age_group_code]
+            consoles_for_age_group = [console_column[i] for i in age_indices]
+
+            most_common_console = max(set(consoles_for_age_group), key=consoles_for_age_group.count)
+            most_popular_console_by_age_group[age_group] = most_common_console
+
+        print("Most popular console for each age group:")
+        for age_group, console in most_popular_console_by_age_group.items():
+            print(f"{age_group}: {console}")
+
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Failed to retrieve most popular console by age group. Please try again.\n")
+
 user_login()
 data = user_questions()
 worksheet_name = "how_we_game"
