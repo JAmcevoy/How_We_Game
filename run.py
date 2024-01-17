@@ -14,8 +14,15 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('how_we_game')
 
+console_mapping = {'A': 'Xbox', 'B': 'PlayStation', 'C': 'Nintendo', 'D': 'PC'}
+age_mapping = {'A': '18-24', 'B': '25-34', 'C': '35-44', 'D': '45+'}
+loyalty_mapping = {'A': 'Likely', 'B': 'Neutral', 'C': 'Unlikely'}
+
 
 def user_questions():
+    """
+    User survey questions
+    """
     while True:
         print("Welcome How We Game Survey")
         try:
@@ -51,6 +58,9 @@ def user_questions():
 
 
 def admin_questions():
+    """
+    admin control questions
+    """
     print("Welcome to How We Game Admin Panel!")
     print("Please confirm Yes/No to the following queries you wish to run:")
 
@@ -77,6 +87,10 @@ def admin_questions():
 
 
 def user_login():
+    """
+    Prompts the user to pick a user type and directs them to the correct questions base on the user type.
+    Asks the admin user for a defined password
+    """
     while True:
         user_type = input("Which user type do you wish to continue with? User or Admin: ").lower()
 
@@ -102,6 +116,9 @@ def user_login():
 
 
 def update_worksheet(data, worksheet_name):
+    """
+    Updates the worksheets with the answers from the user questions function.
+    """
     try:
         print(f"Updating {worksheet_name} worksheet...\n")
         sheet = GSPREAD_CLIENT.open('how_we_game')
@@ -115,6 +132,9 @@ def update_worksheet(data, worksheet_name):
 
         
 def console_count():
+    """
+    Counts the number of enteries by console type (Xbox, PlayStation, Nintendo, Pc)
+    """
     try:
         console_column = SHEET.worksheet("submissions").col_values(1)[1:]
 
@@ -134,6 +154,9 @@ def console_count():
 
 
 def most_popular_console_by_age():
+    """
+    Gets the the most popular console by ages group
+    """
     try:
         age_column = SHEET.worksheet("submissions").col_values(3)[1:]
         console_column = SHEET.worksheet("submissions").col_values(1)[1:]
@@ -159,6 +182,9 @@ def most_popular_console_by_age():
 
 
 def get_loyalty_count():
+    """
+    Count the how many user wish to stick with their console choice next purchase (Likely, Netural, Unlikely)
+    """
     try:
         loyalty_column = SHEET.worksheet("submissions").col_values(4)[1:]
 
