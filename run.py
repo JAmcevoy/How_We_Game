@@ -1,22 +1,23 @@
 import gspread
 from google.oauth2.service_account import Credentials
 
-
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/drive"
 ]
 
-
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-SHEET = GSPREAD_CLIENT.open('how_we_game')
+SHEET_NAME = 'how_we_game'
 
 let_to_console = {'A': 'Xbox', 'B': 'PlayStation', 'C': 'Nintendo', 'D': 'PC'}
 let_to_age = {'A': '18-24', 'B': '25-34', 'C': '35-44', 'D': '45+'}
-let_to_loyalty = {'A': 'Likely', 'B': 'Netural', 'C': 'Unlikely'}
+let_to_loyalty = {'A': 'Likely', 'B': 'Neutral', 'C': 'Unlikely'}
+
+def handle_invalid_choice():
+    print("Invalid choice. Please enter a valid option.")
 
 
 def user_questions():
@@ -42,7 +43,7 @@ def user_questions():
             if loyalty_choice not in {'A', 'B', 'C'}:
                 raise ValueError("Invalid choice. Please choose A, B, or C.")
 
-            check_answers = input(f"Are you sure these are your final answers? Q1){console_brand} Q2){satisfaction_rating} Q3){age_group} Q4){loyalty_choice} : ")
+            check_answers = input(f"Are you sure these are your final answers? Q1){console_brand} Q2){satisfaction_rating} Q3){age_group} Q4){loyalty_choice} (Yes/No) : ")
             
             if check_answers.lower() == "yes":
                 print("Thank you for completing the survey!")
@@ -62,28 +63,52 @@ def admin_questions():
     admin control questions
     """
     print("Welcome to How We Game Admin Panel!")
-    print("Please confirm Yes/No to the following queries you wish to run:")
 
     try:
-        console_count_input = input("1. What is the number of users for each console? (yes/no): ").lower()
+        while True:
+            console_count_input = input("1. What is the number of users for each console? (yes/no): ").lower()
+            if console_count_input == "yes" or console_count_input == "no":
+                break
+            else:
+                print("Invalid choice. Please enter yes or no.")
+
         if console_count_input == "yes":
             console_count()
-        
-        rating_count_input = input("2. How many users gave a rating greater than 5 or less than 5? (yes/no): ").lower()
+
+        while True:
+            rating_count_input = input("2. How many users gave a rating greater than 5 or less than 5? (yes/no): ").lower()
+            if rating_count_input == "yes" or rating_count_input == "no":
+                break
+            else:
+                print("Invalid choice. Please enter yes or no.")
+
         if rating_count_input == "yes":
             get_rating()
-        
-        age_group_input = input("3. What is the most popular console for each age group? (yes/no): ").lower()
+
+        while True:
+            age_group_input = input("3. What is the most popular console for each age group? (yes/no): ").lower()
+            if age_group_input == "yes" or age_group_input == "no":
+                break
+            else:
+                print("Invalid choice. Please enter yes or no.")
+
         if age_group_input == "yes":
             most_popular_console_by_age()
 
-        loyalty_count_input = input("4. How many users are likely to stay with their current console brand? (yes/no): ").lower()
+        while True:
+            loyalty_count_input = input("4. How many users are likely to stay with their current console brand? (yes/no): ").lower()
+            if loyalty_count_input == "yes" or loyalty_count_input == "no":
+                break
+            else:
+                print("Invalid choice. Please enter yes or no.")
+
         if loyalty_count_input == "yes":
             get_loyalty_count()
 
     except Exception as e:
         print(f"Error: {e}")
         print("An error occurred. Please try again.\n")
+
 
 
 def user_login():
@@ -163,6 +188,9 @@ def get_rating():
     try:
         satisfaction_column = SHEET.worksheet("submissions").col_values(2)[1:]
         satisfaction_column = [int(rating) for rating in satisfaction_column]
+
+        if not valid_ratings:
+            raise ValueError("No valid numeric ratings found in the column.")
 
         high_or_low = input("How many Higher than 5 or lower than 5? (Higher/Lower): ").lower()
 
