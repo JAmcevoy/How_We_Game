@@ -1,11 +1,13 @@
 import gspread
 from google.oauth2.service_account import Credentials
 
+
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/drive"
 ]
+
 
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
@@ -48,7 +50,6 @@ def user_questions():
             print("Please provide valid input.\n")
 
 
-
 def admin_questions():
     print("Welcome to How We Game Admin Panel!")
     print("Please confirm Yes/No to the following queries you wish to run:")
@@ -75,7 +76,6 @@ def admin_questions():
         print("An error occurred. Please try again.\n")
 
 
-
 def user_login():
     user_type = input("Which user type do you wish to continue with? User or Admin: ").lower()
 
@@ -93,19 +93,20 @@ def user_login():
         print("Invalid User. Please select User or Admin.")
 
 
+
 def update_worksheet(data, worksheet_name):
     try:
         print(f"Updating {worksheet_name} worksheet...\n")
-        worksheet_to_update = GSPREAD_CLIENT.open(SHEET_NAME).worksheet(worksheet_name)
-        GSPREAD_CLIENT.insert_row(data, index=2, worksheet=worksheet_to_update)
+        sheet = GSPREAD_CLIENT.open('how_we_game')
+        worksheet_to_update = sheet.worksheet(worksheet_name)
+        worksheet_to_update.append_row(data)
         print(f"{worksheet_name} worksheet updated successfully\n")
     except Exception as e:
         print(f"Error: {e}")
         print("Failed to update worksheet. Please try again.\n")
 
+
         
-
-
 def console_count():
     try:
         console_column = GSPREAD_CLIENT.open(SHEET_NAME).sheet1.col_values(1)[1:]
@@ -142,6 +143,7 @@ def get_rating():
         print(f"Error: {e}")
         print("Failed to retrieve rating count. Please try again.\n")
 
+
 def most_popular_console_by_age():
     try:
         age_column = GSPREAD_CLIENT.open(SHEET_NAME).sheet1.col_values(3)[1:]
@@ -166,7 +168,24 @@ def most_popular_console_by_age():
         print(f"Error: {e}")
         print("Failed to retrieve most popular console by age group. Please try again.\n")
 
+
+def get_loyalty_count():
+    try:
+        loyalty_column = GSPREAD_CLIENT.open(SHEET_NAME).sheet1.col_values(4)[1:]
+
+        likely_count = loyalty_column.count('A')
+        neutral_count = loyalty_column.count('B')
+        unlikely_count = loyalty_column.count('C')
+
+        print("Number of users likely to stay with their current console brand:")
+        print(f"Likely: {likely_count}")
+        print(f"Neutral: {neutral_count}")
+        print(f"Unlikely: {unlikely_count}")
+
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Failed to retrieve loyalty count. Please try again.\n")
+
+
 user_login()
-data = user_questions()
-worksheet_name = "how_we_game"
-update_worksheet(data, worksheet_name)
+update_worksheet(data, 'submissions')
