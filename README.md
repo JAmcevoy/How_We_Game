@@ -1,14 +1,20 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+![Terminal](docs/images/terminal)
 
-Welcome,
+# Welcome to How We Game
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **March 14, 2023**
+## User Survey and Data Collection Module
+- Whats is this? 
+    - This is a Survey setup around gamers.
+- What is the aim of this software    
+    - To find out what console people are currently playing.
+    - To find out what is the most popular console based on age groups
+    - Find out how loyal players are to their console of choice.
 
-## Reminders
+## User Hopes
 
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
+- As a user I hope the software is easy to understand
+- As a user I want to limit the amount errors unhandled
+- As a user I would want constant information to ensure I am filling the survey out correctly.
 
 ## Creating the Heroku app
 
