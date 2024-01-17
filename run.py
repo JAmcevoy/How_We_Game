@@ -17,6 +17,9 @@ let_to_age = {'A': '18-24', 'B': '25-34', 'C': '35-44', 'D': '45+'}
 let_to_loyalty = {'A': 'Likely', 'B': 'Neutral', 'C': 'Unlikely'}
 
 def handle_invalid_choice():
+    """
+    Handles all the invalid choices errors. 
+    """
     print("Invalid choice. Please enter a valid option.")
 
 
@@ -59,48 +62,45 @@ def user_questions():
 
 
 def admin_questions():
-    """
-    admin control questions
-    """
     print("Welcome to How We Game Admin Panel!")
 
     try:
         while True:
             console_count_input = input("1. What is the number of users for each console? (yes/no): ").lower()
-            if console_count_input == "yes" or console_count_input == "no":
+            if console_count_input in {"yes", "no"}:
                 break
             else:
-                print("Invalid choice. Please enter yes or no.")
+                handle_invalid_choice()
 
         if console_count_input == "yes":
             console_count()
 
         while True:
             rating_count_input = input("2. How many users gave a rating greater than 5 or less than 5? (yes/no): ").lower()
-            if rating_count_input == "yes" or rating_count_input == "no":
+            if rating_count_input in {"yes", "no"}:
                 break
             else:
-                print("Invalid choice. Please enter yes or no.")
+                handle_invalid_choice()
 
         if rating_count_input == "yes":
             get_rating()
 
         while True:
             age_group_input = input("3. What is the most popular console for each age group? (yes/no): ").lower()
-            if age_group_input == "yes" or age_group_input == "no":
+            if age_group_input in {"yes", "no"}:
                 break
             else:
-                print("Invalid choice. Please enter yes or no.")
+                handle_invalid_choice()
 
         if age_group_input == "yes":
             most_popular_console_by_age()
 
         while True:
             loyalty_count_input = input("4. How many users are likely to stay with their current console brand? (yes/no): ").lower()
-            if loyalty_count_input == "yes" or loyalty_count_input == "no":
+            if loyalty_count_input in {"yes", "no"}:
                 break
             else:
-                print("Invalid choice. Please enter yes or no.")
+                handle_invalid_choice()
 
         if loyalty_count_input == "yes":
             get_loyalty_count()
@@ -108,7 +108,6 @@ def admin_questions():
     except Exception as e:
         print(f"Error: {e}")
         print("An error occurred. Please try again.\n")
-
 
 
 def user_login():
