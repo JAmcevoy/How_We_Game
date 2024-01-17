@@ -19,6 +19,17 @@ age_mapping = {'A': '18-24', 'B': '25-34', 'C': '35-44', 'D': '45+'}
 loyalty_mapping = {'A': 'Likely', 'B': 'Neutral', 'C': 'Unlikely'}
 
 
+def map_user_choices(console_brand, age_group, loyalty_choice):
+    """
+    Maps user choices to their corresponding values using predefined dictionaries.Maps user choices to their corresponding values using predefined dictionaries.
+    """
+    mapped_console_brand = console_mapping.get(console_brand, 'Invalid')
+    mapped_age_group = age_mapping.get(age_group, 'Invalid')
+    mapped_loyalty_choice = loyalty_mapping.get(loyalty_choice, 'Invalid')
+
+    return [mapped_console_brand, mapped_age_group, mapped_loyalty_choice]
+
+
 def user_questions():
     """
     User survey questions
@@ -44,9 +55,10 @@ def user_questions():
 
             check_answers = input(f"Are you sure these are your final answers? Q1){console_brand} Q2){satisfaction_rating} Q3){age_group} Q4){loyalty_choice} : ")
             
-            if check_answers.lower() == "yes":
+           if check_answers.lower() == "yes":
                 print("Thank you for completing the survey!")
-                return [console_brand, satisfaction_rating, age_group, loyalty_choice]
+                mapped_choices = map_user_choices(console_brand, age_group, loyalty_choice)
+                return [console_brand, satisfaction_rating, age_group, loyalty_choice, *mapped_choices]
             elif check_answers.lower() == "no":
                 return None
             else:
@@ -55,7 +67,6 @@ def user_questions():
         except ValueError as ve:
             print(f"Error: {ve}")
             print("Please provide valid input.\n")
-
 
 def admin_questions():
     """
