@@ -10,44 +10,37 @@ SCOPE = [
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
-SHEET_NAME = 'how_we_game'
+SHEET = GSPREAD_CLIENT.open('how_we_game')
 
 let_to_console = {'A': 'Xbox', 'B': 'PlayStation', 'C': 'Nintendo', 'D': 'PC'}
 let_to_age = {'A': '18-24', 'B': '25-34', 'C': '35-44', 'D': '45+'}
 let_to_loyalty = {'A': 'Likely', 'B': 'Neutral', 'C': 'Unlikely'}
 
 def handle_invalid_choice():
-    """
-    Handles all the invalid choices errors. 
-    """
-    print("Invalid choice. Please enter a valid option.")
+    print("Invalid choice. Please enter yes or no.")
 
-
-def user_questions():
-    """
-    User survey questions
-    """
+def user_questions(SHEET):
     while True:
         print("Welcome How We Game Survey")
         try:
             console_brand = input("What is your preferred gaming console brand? A)Xbox B)PlayStation C)Nintendo D)PC : ").upper()
             if console_brand not in {'A', 'B', 'C', 'D'}:
                 raise ValueError("Invalid choice. Please choose A, B, C, or D.")
-            
+
             satisfaction_rating = int(input("On a scale of 1 to 10, how satisfied are you with your current gaming console? (1-10): "))
             if not (1 <= satisfaction_rating <= 10):
                 raise ValueError("Invalid choice. Please choose a number between 1 and 10.")
-            
+
             age_group = input("What is your age group? A)18-24 B)25-34 C)35-44 D)45+ : ").upper()
             if age_group not in {'A', 'B', 'C', 'D'}:
                 raise ValueError("Invalid choice. Please choose A, B, C, or D.")
-            
+
             loyalty_choice = input("How likely are you to stick with your current gaming console brand for your next purchase? A)Likely B)Neutral C)Unlikely : ").upper()
             if loyalty_choice not in {'A', 'B', 'C'}:
                 raise ValueError("Invalid choice. Please choose A, B, or C.")
 
-            check_answers = input(f"Are you sure these are your final answers? Q1){console_brand} Q2){satisfaction_rating} Q3){age_group} Q4){loyalty_choice} (Yes/No) : ")
-            
+            check_answers = input(f"Are you sure these are your final answers? Q1){console_brand} Q2){satisfaction_rating} Q3){age_group} Q4){loyalty_choice} : ")
+
             if check_answers.lower() == "yes":
                 print("Thank you for completing the survey!")
                 return [console_brand, satisfaction_rating, age_group, loyalty_choice]
@@ -55,73 +48,58 @@ def user_questions():
                 return None
             else:
                 raise ValueError("Please select yes or no.")
-        
+
         except ValueError as ve:
             print(f"Error: {ve}")
             print("Please provide valid input.\n")
+            handle_invalid_choice()
 
-
-def admin_questions():
+def admin_questions(SHEET):
     print("Welcome to How We Game Admin Panel!")
 
     try:
         while True:
             console_count_input = input("1. What is the number of users for each console? (yes/no): ").lower()
-            if console_count_input in {"yes", "no"}:
+            if console_count_input == "yes" or console_count_input == "no":
                 break
             else:
                 handle_invalid_choice()
 
         if console_count_input == "yes":
-            console_count()
+            console_count(SHEET)
 
         while True:
             rating_count_input = input("2. How many users gave a rating greater than 5 or less than 5? (yes/no): ").lower()
-            if rating_count_input in {"yes", "no"}:
+            if rating_count_input == "yes" or rating_count_input == "no":
                 break
             else:
                 handle_invalid_choice()
 
         if rating_count_input == "yes":
-            get_rating()
-
-        while True:
-            age_group_input = input("3. What is the most popular console for each age group? (yes/no): ").lower()
-            if age_group_input in {"yes", "no"}:
-                break
-            else:
-                handle_invalid_choice()
-
-        if age_group_input == "yes":
-            most_popular_console_by_age()
+            get_rating(SHEET)
 
         while True:
             loyalty_count_input = input("4. How many users are likely to stay with their current console brand? (yes/no): ").lower()
-            if loyalty_count_input in {"yes", "no"}:
+            if loyalty_count_input == "yes" or loyalty_count_input == "no":
                 break
             else:
                 handle_invalid_choice()
 
         if loyalty_count_input == "yes":
-            get_loyalty_count()
+            get_loyalty_count(SHEET)
 
     except Exception as e:
         print(f"Error: {e}")
         print("An error occurred. Please try again.\n")
 
-
-def user_login():
-    """
-    Prompts the user to pick a user type and directs them to the correct questions base on the user type.
-    Asks the admin user for a defined password
-    """
+def user_login(SHEET):
     while True:
         user_type = input("Which user type do you wish to continue with? User or Admin: ").lower()
 
         if user_type == "user":
-            data = user_questions()
+            data = user_questions(SHEET)
             if data is not None:
-                update_worksheet(data, 'submissions')
+                update_worksheet(data, 'submissions', SHEET)
                 print("Survey submitted successfully!")
                 break
             else:
@@ -130,19 +108,14 @@ def user_login():
             admin_password = input("Enter the admin password: ")
 
             if admin_password == 'Letsgame24!':
-                admin_questions()
+                admin_questions(SHEET)
                 break
             else:
                 print("Incorrect password. Access denied.")
         else:
             print("Invalid User. Please select User or Admin.")
 
-
-
-def update_worksheet(data, worksheet_name):
-    """
-    Updates the worksheets with the answers from the user questions function.
-    """
+def update_worksheet(data, worksheet_name, SHEET):
     try:
         console_brand, satisfaction_rating, age_group, loyalty_choice = data
         console_brand = let_to_console.get(console_brand, console_brand)
@@ -152,7 +125,7 @@ def update_worksheet(data, worksheet_name):
         data_with_words = [console_brand, satisfaction_rating, age_group, loyalty_choice]
 
         print(f"Updating {worksheet_name} worksheet...\n")
-        sheet = GSPREAD_CLIENT.open('how_we_game')
+        sheet = SHEET
         worksheet_to_update = sheet.worksheet(worksheet_name)
         worksheet_to_update.append_row(data_with_words)
         print(f"{worksheet_name} worksheet updated successfully\n")
@@ -160,11 +133,7 @@ def update_worksheet(data, worksheet_name):
         print(f"Error: {e}")
         print("Failed to update worksheet. Please try again.\n")
 
-        
-def console_count():
-    """
-    Counts the number of enteries by console type (Xbox, PlayStation, Nintendo, Pc)
-    """
+def console_count(SHEET):
     try:
         console_column = SHEET.worksheet("submissions").col_values(1)[1:]
 
@@ -182,14 +151,15 @@ def console_count():
         print(f"Error: {e}")
         print("Failed to retrieve console count. Please try again.\n")
 
-
-def get_rating():
+def get_rating(SHEET):
     try:
         satisfaction_column = SHEET.worksheet("submissions").col_values(2)[1:]
-        satisfaction_column = [int(rating) for rating in satisfaction_column]
+        valid_ratings = all(value.isdigit() for value in satisfaction_column)
 
         if not valid_ratings:
             raise ValueError("No valid numeric ratings found in the column.")
+
+        satisfaction_column = [int(rating) for rating in satisfaction_column]
 
         high_or_low = input("How many Higher than 5 or lower than 5? (Higher/Lower): ").lower()
 
@@ -206,55 +176,31 @@ def get_rating():
         print("Failed to retrieve rating count. Please try again.\n")
 
 
-def most_popular_console_by_age():
-    """
-    Gets the the most popular console by ages group
-    """
-    try:
-        age_column = SHEET.worksheet("submissions").col_values(3)[1:]
-        console_column = SHEET.worksheet("submissions").col_values(1)[1:]
+def get_loyalty_count(SHEET):
+  """
+  Count the number of users likely to stay with their console choice next purchase (Likely, Neutral, Unlikely)
+  """
+  try:
+      loyalty_column = SHEET.worksheet("submissions").col_values(4)[1:]
 
-        age_groups = {'A': '18-24', 'B': '25-34', 'C': '35-44', 'D': '45+'}
+      likely_count = loyalty_column.count('Likely')
+      neutral_count = loyalty_column.count('Neutral')
+      unlikely_count = loyalty_column.count('Unlikely')
 
-        most_popular_console_by_age_group = {}
+      print("Number of users likely to stay with their current console brand:")
+      print(f"Likely: {likely_count}")
+      print(f"Neutral: {neutral_count}")
+      print(f"Unlikely: {unlikely_count}")
 
-        for age_group_code, age_group in age_groups.items():
-            age_indices = [i for i, age in enumerate(age_column) if age == age_group_code]
-            consoles_for_age_group = [console_column[i] for i in age_indices]
-
-            most_common_console = max(set(consoles_for_age_group), key=consoles_for_age_group.count)
-            most_popular_console_by_age_group[age_group] = most_common_console
-
-        print("Most popular console for each age group:")
-        for age_group, console in most_popular_console_by_age_group.items():
-            print(f"{age_group}: {console}")
-
-    except Exception as e:
-        print(f"Error: {e}")
-        print("Failed to retrieve most popular console by age group. Please try again.\n")
+  except Exception as e:
+      print(f"Error: {e}")
+      print("Failed to retrieve loyalty count. Please try again.\n")
 
 
-def get_loyalty_count():
-    """
-    Count the how many user wish to stick with their console choice next purchase (Likely, Netural, Unlikely)
-    """
-    try:
-        loyalty_column = SHEET.worksheet("submissions").col_values(4)[1:]
+def main():
+    user_login(SHEET)
+    data = user_questions(SHEET)
+    update_worksheet(data, 'submissions', SHEET)
 
-        likely_count = loyalty_column.count('A')
-        neutral_count = loyalty_column.count('B')
-        unlikely_count = loyalty_column.count('C')
-
-        print("Number of users likely to stay with their current console brand:")
-        print(f"Likely: {likely_count}")
-        print(f"Neutral: {neutral_count}")
-        print(f"Unlikely: {unlikely_count}")
-
-    except Exception as e:
-        print(f"Error: {e}")
-        print("Failed to retrieve loyalty count. Please try again.\n")
-
-
-user_login()
-data = user_questions()
-update_worksheet(data, 'submissions')
+if __name__ == "__main__":
+    main()
