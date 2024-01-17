@@ -14,6 +14,10 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('how_we_game')
 
+let_to_console = {'A': 'Xbox', 'B': 'PlayStation', 'C': 'Nintendo', 'D': 'PC'}
+let_to_age = {'A': '18-24', 'B': '25-34', 'C': '35-44', 'D': '45+'}
+let_to_loyalty = {'A': 'Likely', 'B': 'Netural', 'C': 'Unlikely'}
+
 
 def user_questions():
     """
@@ -116,15 +120,21 @@ def update_worksheet(data, worksheet_name):
     Updates the worksheets with the answers from the user questions function.
     """
     try:
+        console_brand, satisfaction_rating, age_group, loyalty_choice = data
+        console_brand = let_to_console.get(console_brand, console_brand)
+        age_group = let_to_age.get(age_group, age_group)
+        loyalty_choice = let_to_loyalty.get(loyalty_choice, loyalty_choice)
+
+        data_with_words = [console_brand, satisfaction_rating, age_group, loyalty_choice]
+
         print(f"Updating {worksheet_name} worksheet...\n")
         sheet = GSPREAD_CLIENT.open('how_we_game')
         worksheet_to_update = sheet.worksheet(worksheet_name)
-        worksheet_to_update.append_row(data)
+        worksheet_to_update.append_row(data_with_words)
         print(f"{worksheet_name} worksheet updated successfully\n")
     except Exception as e:
         print(f"Error: {e}")
         print("Failed to update worksheet. Please try again.\n")
-
 
         
 def console_count():
