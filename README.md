@@ -102,17 +102,66 @@ The provided code is a Python script that implements a simple survey system rela
 - `age_group`: Age group (18-24, 25-34, 35-44, 45+).
 - `loyalty_choice`: Likelihood to stick with the current gaming console brand (Likely, Neutral, Unlikely).
 
-## Functions:
-- `handle_invalid_choice()`: Prints a message for invalid choices.
-- `validate_satisfaction_rating(answer)`: Validates the satisfaction rating input.
-- `get_user_choice(prompt, valid_choices)`: Gets and validates user input based on a prompt and valid choices.
-- `user_questions(SHEET)`: Collects user survey responses, validates inputs, and stores the data in a Google Sheet.
-- `admin_questions(SHEET)`: Admin panel to perform various actions based on user input, such as console count, rating count, and loyalty count.
-- `user_login(SHEET)`: Allows users to log in as a regular user or an admin, guiding them through the survey or admin functionalities.
-- `update_worksheet(data, worksheet_name, SHEET)`: Updates the Google Sheet with user survey responses.
-- `console_count(SHEET)`: Counts the number of users for each gaming console and provides the count.
-- `get_rating(SHEET)`: Gets the count of users with ratings higher or lower than a specified threshold.
-- `get_loyalty_count(SHEET)`: Counts the number of users likely to stay with their current console brand and provides the count.
+## Survey Script Functions Overview
+
+This section provides an overview of the functions used in the provided Python script for the How We Game survey system.
+
+### 1. Google Sheets Integration
+
+#### `update_worksheet(data, worksheet_name)`
+- **Description:** Updates the specified Google Sheets worksheet with user responses.
+- **Parameters:**
+  - `data`: List containing user survey data.
+  - `worksheet_name`: Name of the Google Sheets worksheet to update.
+
+### 2. User Input and Validation
+
+#### `handle_invalid_choice()`
+- **Description:** Handles invalid choices entered by the user.
+
+#### `validate_satisfaction_rating(answer)`
+- **Description:** Validates user input for satisfaction rating.
+- **Parameters:**
+  - `answer`: User input for satisfaction rating.
+
+#### `get_user_choice(prompt, valid_choices)`
+- **Description:** Gets and validates user input based on a prompt and valid choices.
+- **Parameters:**
+  - `prompt`: Prompt for the user.
+  - `valid_choices`: Set of valid choices.
+
+### 3. User Survey Functions
+
+#### `user_questions()`
+- **Description:** Collects user survey responses, validates inputs, and updates the Google Sheets document accordingly.
+
+### 4. Admin Panel Functions
+
+#### `admin_questions()`
+- **Description:** Provides an admin panel to perform various actions based on user input.
+
+#### `console_count()`
+- **Description:** Counts the number of users for each gaming console.
+
+#### `get_rating()`
+- **Description:** Gets the count of users with satisfaction ratings above or below a specified threshold.
+
+#### `get_loyalty_count()`
+- **Description:** Counts the number of users likely to stay with their current console brand for the next purchase.
+
+#### `export_to_csv()`
+- **Description:** Exports survey data to a CSV file.
+
+### 5. Main Function
+
+#### `user_login()`
+- **Description:** Manages user login, allowing users to choose between being a regular user or an admin.
+
+### 6. Conditional Execution
+
+#### `__main__`
+- **Description:** Ensures that the main function (`user_login()`) is executed when the script is run.
+
 
 ## Constants and Configuration: 
 - ADMIN_PASSWORD: Password to access the admin panel.
