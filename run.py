@@ -56,39 +56,44 @@ def get_user_choice(prompt, valid_choices):
             print(f"Invalid choice. Please choose {', '.join(valid_choices)}.")
 
 def user_questions(SHEET):
-    while True:
-        print("Welcome How We Game Survey")
-        try:
-            console_brand = input("What is your preferred gaming console brand? A)Xbox B)PlayStation C)Nintendo D)PC : ").upper()
-            if console_brand not in {'A', 'B', 'C', 'D'}:
-                raise ValueError("Invalid choice. Please choose A, B, C, or D.")
+    """
+    Collect user survey responses and validate inputs.
+    """
+    print("Welcome To How We Game Survey")
+    questions = {}
 
-            satisfaction_rating = int(input("On a scale of 1 to 10, how satisfied are you with your current gaming console? (1-10): "))
-            if not (1 <= satisfaction_rating <= 10):
-                raise ValueError("Invalid choice. Please choose a number between 1 and 10.")
-
-            age_group = input("What is your age group? A)18-24 B)25-34 C)35-44 D)45+ : ").upper()
-            if age_group not in {'A', 'B', 'C', 'D'}:
-                raise ValueError("Invalid choice. Please choose A, B, C, or D.")
-
-            loyalty_choice = input("How likely are you to stick with your current gaming console brand for your next purchase? A)Likely B)Neutral C)Unlikely : ").upper()
-            if loyalty_choice not in {'A', 'B', 'C'}:
-                raise ValueError("Invalid choice. Please choose A, B, or C.")
-
-            check_answers = input(f"Are you sure these are your final answers? Q1){console_brand} Q2){satisfaction_rating} Q3){age_group} Q4){loyalty_choice} : ")
-
-            if check_answers.lower() == "yes":
-                print("Thank you for completing the survey!")
-                return [console_brand, satisfaction_rating, age_group, loyalty_choice]
-            elif check_answers.lower() == "no":
-                return None
+    for key, prompt in QUESTION_PROMPTS.items():
+        while True:
+            if key == 'console_brand':
+                answer == get_user_choice(prompt, VALID_CONSOLE_CHOICES)
+            elif key == 'satisfaction_rating':
+                answer = input(promt)
+                try: 
+                    questions[key] = validate_satisfaction_rating(answer)
+                    break
+                except ValueError as ve:
+                    logging.error(f"ValueError: {ve}")
+                    print(f"Error: {ve}")
+                    print("Please provide valid input.\n")
+                    continue
             else:
-                raise ValueError("Please select yes or no.")
+                answer = get_user_choice(prompt, VALID_CONSOLE_CHOICES)
+                questions[key] = answer
+                break
 
-        except ValueError as ve:
-            print(f"Error: {ve}")
-            print("Please provide valid input.\n")
-            handle_invalid_choice()
+        check_answers = input(f"Are you sure these are your final answers? "
+                         f"Q1){questions['console_brand']} Q2){questions['satisfaction_rating']} "
+                         f"Q3){questions['age_group']} Q4){questions['loyalty_choice']} : ")
+
+    if check_answers.lower() == "yes":
+        print("Thank you for completing the survey!")
+        return [LET_TO_CONSOLE[questions['console_brand']], questions['satisfaction_rating'],
+                LET_TO_AGE[questions['age_group']], LET_TO_LOYALTY[questions['loyalty_choice']]]
+    elif check_answers.lower() == "no":
+        return None
+    else:
+        raise ValueError("Please select yes or no.")
+            
 
 def admin_questions(SHEET):
     print("Welcome to How We Game Admin Panel!")
