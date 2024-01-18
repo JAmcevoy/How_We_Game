@@ -40,7 +40,7 @@ def validate_satisfaction_rating(answer):
     """
     try:
         rating = int(answer)
-        if not (1<= rating <= 10):
+        if not (1 <= rating <= 10):
             raise ValueError("Invalid choice for rating. Please choose a number between 1 and 10.")
         return rating
     except ValueError:
@@ -50,7 +50,7 @@ def get_user_choice(prompt, valid_choices):
     """
     Get and validate user input based on a prompt and valid choices.
     """
-    while True: 
+    while True:
         answer = input(prompt).upper()
         if answer in valid_choices:
             return answer
@@ -61,16 +61,16 @@ def user_questions(SHEET):
     """
     Collect user survey responses and validate inputs.
     """
-    print("Welcome To How We Game Survey")
+    print("Welcome How We Game Survey")
     questions = {}
 
     for key, prompt in QUESTION_PROMPTS.items():
         while True:
             if key == 'console_brand':
-                answer == get_user_choice(prompt, VALID_CONSOLE_CHOICES)
+                answer = get_user_choice(prompt, VALID_CONSOLE_CHOICES)
             elif key == 'satisfaction_rating':
-                answer = input(promt)
-                try: 
+                answer = input(prompt)
+                try:
                     questions[key] = validate_satisfaction_rating(answer)
                     break
                 except ValueError as ve:
@@ -80,10 +80,10 @@ def user_questions(SHEET):
                     continue
             else:
                 answer = get_user_choice(prompt, VALID_CONSOLE_CHOICES)
-                questions[key] = answer
-                break
+            questions[key] = answer
+            break
 
-        check_answers = input(f"Are you sure these are your final answers? "
+    check_answers = input(f"Are you sure these are your final answers? "
                          f"Q1){questions['console_brand']} Q2){questions['satisfaction_rating']} "
                          f"Q3){questions['age_group']} Q4){questions['loyalty_choice']} : ")
 
@@ -95,13 +95,12 @@ def user_questions(SHEET):
         return None
     else:
         raise ValueError("Please select yes or no.")
-            
 
 def admin_questions(SHEET):
     """
     Admin panel to perform various actions based on user input.
     """
-    try: 
+    try:
         options = {
             'console_count': ('What is the number of users for each console? (yes/no): ', console_count),
             'rating_count': ('How many users gave a rating greater than 5 or less than 5? (yes/no): ', get_rating),
@@ -113,7 +112,7 @@ def admin_questions(SHEET):
                 user_input = input(promt).lower()
                 if user_input == 'yes' or user_input == 'no':
                     break
-                else: 
+                else:
                     handle_invalid_choice
             if user_input == 'yes':
                 function(SHEET)
@@ -125,7 +124,7 @@ def user_login(SHEET):
     """
     User login to choose between regular user and admin.
     """
-    while True: 
+    while True:
         user_type = input("Which user type do you wish to continue with? User or Admin: ").lower()
 
         if user_type == "user":
@@ -141,12 +140,14 @@ def user_login(SHEET):
             if admin_password == ADMIN_PASSWORD:
                 admin_questions(SHEET)
                 break
-            else ("Incorrect password. Access denied.")    
-        else:print("Invalid User. Please select User or Admin.")  
+            else:
+                print("Incorrect password. Access denied.")
+        else:
+            print("Invalid User. Please select User or Admin.")
 
 def update_worksheet(data, worksheet_name, SHEET):
     """
-     Update the Google Sheet with user responses.
+    Update the Google Sheet with user responses.
     """
     try:
         console_brand, satisfaction_rating, age_group, loyalty_choice = data
@@ -155,11 +156,12 @@ def update_worksheet(data, worksheet_name, SHEET):
         print(f"Updating {worksheet_name} worksheet...\n")
         worksheet_to_update = SHEET.worksheet(worksheet_name)
         worksheet_to_update.append_row(data_with_words)
+        print(f"{worksheet_name} worksheet updated successfully\n")
+    except Exception as e:
         print(f"Error: {e}")
         print("Failed to update worksheet. Please try again.\n")
 
-
-def console_count(SHEET):
+def console_count():
     """
     Count the number of users for each console.
     """
@@ -172,6 +174,7 @@ def console_count(SHEET):
     except Exception as e:
         print(f"Error: {e}")
         print("Failed to retrieve console count. Please try again.\n")
+
 
 def get_rating(SHEET):
     try:
