@@ -156,7 +156,7 @@ def update_worksheet(data, worksheet_name, SHEET):
         print(f"Updating {worksheet_name} worksheet...\n")
         worksheet_to_update = SHEET.worksheet(worksheet_name)
         worksheet_to_update.append_row(data_with_words)
-        print(f"{worksheet_name} worksheet updated successfully\n")
+        print(f"{worksheet_name} Worksheet Updated Successfully\n")
     except Exception as e:
         print(f"Error: {e}")
         print("Failed to update worksheet. Please try again.\n")
@@ -175,8 +175,10 @@ def console_count():
         print(f"Error: {e}")
         print("Failed to retrieve console count. Please try again.\n")
 
-
 def get_rating(SHEET):
+    """
+    Get the count of users with ratings higher or lower than a threshold.
+    """
     try:
         satisfaction_column = SHEET.worksheet("submissions").col_values(2)[1:]
         valid_ratings = all(value.isdigit() for value in satisfaction_column)
@@ -199,7 +201,6 @@ def get_rating(SHEET):
     except Exception as e:
         print(f"Error: {e}")
         print("Failed to retrieve rating count. Please try again.\n")
-
 
 def get_loyalty_count(SHEET):
   """
