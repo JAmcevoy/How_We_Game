@@ -80,7 +80,7 @@ def user_questions():
                     answer = get_user_choice(prompt, VALID_CONSOLE_CHOICES)
                     questions[key] = answer
 
-                break  # Add a break here to exit the loop after setting the answer
+                break
 
             if key == 'loyalty_choice':
                 while True:
@@ -109,7 +109,7 @@ def user_questions():
             print("You have left the system.")
             break
 
-    return None  # Return None in case the loop completes without valid answers for some reason
+    return None 
 
 def admin_questions():
     """
