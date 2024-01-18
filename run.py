@@ -1,6 +1,9 @@
 import gspread
 from google.oauth2.service_account import Credentials
 
+ADMIN_PASSWORD = 'Letsgame24!'
+VALID_CONSOLE_CHOICES = {'A', 'B', 'C', 'D'}
+
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -12,10 +15,7 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('how_we_game')
 
-let_to_console = {'A': 'Xbox', 'B': 'PlayStation', 'C': 'Nintendo', 'D': 'PC'}
-let_to_age = {'A': '18-24', 'B': '25-34', 'C': '35-44', 'D': '45+'}
-let_to_loyalty = {'A': 'Likely', 'B': 'Neutral', 'C': 'Unlikely'}
-
+LET_TO_CONSOLE = {}
 def handle_invalid_choice():
     print("Invalid choice. Please enter yes or no.")
 
