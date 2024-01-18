@@ -160,19 +160,15 @@ def update_worksheet(data, worksheet_name, SHEET):
 
 
 def console_count(SHEET):
+    """
+    Count the number of users for each console.
+    """
     try:
         console_column = SHEET.worksheet("submissions").col_values(1)[1:]
 
-        xbox_count = console_column.count('Xbox')
-        playstation_count = console_column.count('PlayStation')
-        nintendo_count = console_column.count('Nintendo')
-        pc_count = console_column.count('PC')
-
-        print("Number of users for each console")
-        print(f"Xbox: {xbox_count}")
-        print(f"Playstation: {playstation_count}")
-        print(f"Nintendo: {nintendo_count}")
-        print(f"PC: {pc_count}")
+        for console in set(console_column):
+            count = console_column.count(console)
+            print(f"{LET_TO_CONSOLE.get(console, console)}: {count}")
     except Exception as e:
         print(f"Error: {e}")
         print("Failed to retrieve console count. Please try again.\n")
