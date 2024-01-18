@@ -133,6 +133,19 @@ def user_login(SHEET):
             if data is not None:
                 update_worksheet(data, 'submissions', SHEET)
                 print("Survey Submitted Successfully!")
+                export_results_to_csv([data])
+                break
+            else:
+                print("Lets try again.")
+        elif user_type == "admin":
+            if admin_password == ADMIN_PASSWORD:
+                admin_questions(SHEET)
+                break
+            else ("Incorrect password. Access denied.")    
+        else:print("Invalid User. Please select User or Admin.")
+
+
+        
 
 def update_worksheet(data, worksheet_name, SHEET):
     try:
