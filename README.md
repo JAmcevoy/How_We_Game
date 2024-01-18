@@ -71,18 +71,62 @@
 - ADMIN_PASSWORD: Password to access the admin panel.
 - VALID_CONSOLE_CHOICES: Set of valid choices for console preferences.
 
-## Creating the Heroku app
+## Deployment
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+### 1. Create a Heroku App
 
-1. `heroku/python`
-2. `heroku/nodejs`
+- From the Heroku dashboard, click the "Create new app" button.
+- Name your app (e.g., how-we-game) – ensure the name is unique.
+- Choose your region (e.g., Europe) and click "Create app."
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+### 2. Configure App Settings
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+#### Config Vars
 
-Connect your GitHub repository and deploy as normal.
+- Go to the "Settings" tab on your Heroku app dashboard.
+- Locate the "Config Vars" section.
+- Add a new config var:
+  - Key: `CREDS` (all capital letters)
+  - Value: Copy the entire content of the `creds.json` file from your Gitpod workspace.
+  - Click "Add."
+
+**Note:** The `creds.json` file is necessary for connecting to the API, and this config var ensures it's available during Heroku app deployment.
+
+#### Buildpacks
+
+- Go to the "Settings" tab and scroll down to the "Buildpacks" section.
+- Add two buildpacks:
+  1. Select "Python" and click "Save changes."
+  2. Select "node.js" and click "Save."
+
+Ensure the buildpacks are in the correct order: Python on top, and node.js underneath. Adjust the order if needed.
+
+### 3. Deploy from Github
+
+- Go to the "Deploy" tab on your Heroku app dashboard.
+- Choose "Github" as the deployment method.
+- Connect to your Github account and search for your repository name.
+- Connect your Heroku app to your Github repository.
+
+#### Deployment Method
+
+Choose one of the following deployment methods:
+
+- **Automatic Deploys:** Heroku will rebuild your app every time you push a new change to your Github repository.
+- **Manual Deploy:** Manually deploy using the "Deploy Branch" option. This option allows you to show deployment logs as the app is built.
+
+### 4. Monitor Deployment
+
+- Watch the deployment logs to ensure a successful build.
+- Verify the installation of Python, dependencies listed in `requirements.txt`, and node.js.
+
+### 5. Test the Deployed App
+
+- Once the deployment is successful, click the provided link to view your deployed app.
+- Test the functionality of your app, ensuring that it operates as expected in the deployed environment.
+
+Congratulations! You have successfully deployed the **How We Game Survey** project to Heroku. Verify that your app functions correctly in the live environment, and refer to the deployment logs for troubleshooting if needed.
+
 
 ## Constraints
 
