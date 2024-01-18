@@ -27,7 +27,22 @@ LET_TO_AGE = {'A': '18-24', 'B': '25-34', 'C': '35-44', 'D': '45+'}
 LET_TO_LOYALTY = {'A': 'Likely', 'B': 'Neutral', 'C': 'Unlikely'}
 
 def handle_invalid_choice():
+    """
+    Function to handle invalid choices
+    """
     print("Invalid choice. Please enter yes or no.")
+
+def validate_satisfaction_rating(answer):
+    """
+    Validate the satisfaction rating input.
+    """
+    try:
+        rating = int(answer)
+        if not (1<= rating <= 10):
+            raise ValueError("Invalid choice for rating. Please choose a number between 1 and 10.")
+        return rating
+    except ValueError:
+        raise ValueError("Invalid choice for rating. Please choose a number between 1 and 10.")
 
 def user_questions(SHEET):
     while True:
