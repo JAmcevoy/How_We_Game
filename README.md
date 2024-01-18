@@ -31,6 +31,53 @@
     - gspread
     - google-auth
 
+## Python Script Overview/Pseudo Code
+
+The provided code is a Python script that implements a simple survey system related to gaming preferences and console usage. The script utilizes Google Sheets for data storage and interaction. Here's a summary of the main components and functionalities:
+
+### Google Sheets Integration
+
+- The script uses the `gspread` library to interact with Google Sheets.
+- Google Sheets API credentials are set up using a service account file (`creds.json`).
+- The script opens a specific Google Sheets document named 'how_we_game' to store survey responses.
+
+### Constants
+
+- The script defines some constants such as the administrator password (`ADMIN_PASSWORD`) and valid console choices (`VALID_CONSOLE_CHOICES`).
+
+### Mapping Dictionaries
+
+- Dictionaries (`LET_TO_CONSOLE`, `LET_TO_AGE`, `LET_TO_LOYALTY`) are used to map user choices (e.g., 'A', 'B') to corresponding labels (e.g., 'Xbox', '25-34', 'Likely').
+
+### Question Prompts
+
+- A dictionary named `QUESTION_PROMPTS` stores prompts for various survey questions. Each key in the dictionary corresponds to a question, and the associated value is the prompt.
+
+### User Input Validation
+
+- Functions like `handle_invalid_choice` and `validate_satisfaction_rating` handle the validation of user inputs.
+
+### User Survey Functions
+
+- The `user_questions` function collects survey responses from users, validates inputs, and updates the Google Sheets document accordingly.
+
+### Admin Panel Functions
+
+- The `admin_questions` function provides an admin panel to perform various actions based on user input, such as counting users for each console, getting the count of users with ratings above/below a threshold, and counting users likely to stay with their current console brand.
+
+### Export to CSV
+
+- The script includes a function (`export_results_to_csv`) to export survey results to a CSV file.
+
+### Main Function
+
+- The main function serves as the entry point of the script, calling the `user_login` function to prompt users to choose between a regular user and an admin.
+
+### Conditional Execution
+
+- The script includes an `if __name__ == "__main__":` block to ensure that the main function is executed when the script is run.
+
+
 ## Usage
 
 - **Google Sheets Setup:**
