@@ -44,6 +44,17 @@ def validate_satisfaction_rating(answer):
     except ValueError:
         raise ValueError("Invalid choice for rating. Please choose a number between 1 and 10.")
 
+def get_user_choice(prompt, valid_choices):
+    """
+    Get and validate user input based on a prompt and valid choices.
+    """
+    while True: 
+        answer = input(prompt).upper()
+        if answer in valid_choices:
+            return answer
+        else:
+            print(f"Invalid choice. Please choose {', '.join(valid_choices)}.")
+
 def user_questions(SHEET):
     while True:
         print("Welcome How We Game Survey")
