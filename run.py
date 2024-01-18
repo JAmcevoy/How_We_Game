@@ -142,28 +142,22 @@ def user_login(SHEET):
                 admin_questions(SHEET)
                 break
             else ("Incorrect password. Access denied.")    
-        else:print("Invalid User. Please select User or Admin.")
-
-
-        
+        else:print("Invalid User. Please select User or Admin.")  
 
 def update_worksheet(data, worksheet_name, SHEET):
+    """
+     Update the Google Sheet with user responses.
+    """
     try:
         console_brand, satisfaction_rating, age_group, loyalty_choice = data
-        console_brand = let_to_console.get(console_brand, console_brand)
-        age_group = let_to_age.get(age_group, age_group)
-        loyalty_choice = let_to_loyalty.get(loyalty_choice, loyalty_choice)
-
         data_with_words = [console_brand, satisfaction_rating, age_group, loyalty_choice]
 
         print(f"Updating {worksheet_name} worksheet...\n")
-        sheet = SHEET
-        worksheet_to_update = sheet.worksheet(worksheet_name)
+        worksheet_to_update = SHEET.worksheet(worksheet_name)
         worksheet_to_update.append_row(data_with_words)
-        print(f"{worksheet_name} worksheet updated successfully\n")
-    except Exception as e:
         print(f"Error: {e}")
         print("Failed to update worksheet. Please try again.\n")
+
 
 def console_count(SHEET):
     try:
