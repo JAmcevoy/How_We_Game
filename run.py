@@ -120,27 +120,17 @@ def admin_questions(SHEET):
         print("An error occurred. Please try again.\n")
 
 def user_login(SHEET):
-    while True:
+    """
+    User login to choose between regular user and admin.
+    """
+    while True: 
         user_type = input("Which user type do you wish to continue with? User or Admin: ").lower()
 
         if user_type == "user":
             data = user_questions(SHEET)
             if data is not None:
                 update_worksheet(data, 'submissions', SHEET)
-                print("Survey submitted successfully!")
-                break
-            else:
-                print("Let's try again.")
-        elif user_type == "admin":
-            admin_password = input("Enter the admin password: ")
-
-            if admin_password == 'Letsgame24!':
-                admin_questions(SHEET)
-                break
-            else:
-                print("Incorrect password. Access denied.")
-        else:
-            print("Invalid User. Please select User or Admin.")
+                print("Survey Submitted Successfully!")
 
 def update_worksheet(data, worksheet_name, SHEET):
     try:
