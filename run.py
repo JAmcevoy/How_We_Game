@@ -1,6 +1,5 @@
 import gspread
 from google.oauth2.service_account import Credentials
-import logging
 import csv
 
 ADMIN_PASSWORD = 'Letsgame24!'
@@ -57,46 +56,62 @@ def get_user_choice(prompt, valid_choices):
         else:
             print(f"Invalid choice. Please choose {', '.join(valid_choices)}.")
 
-def user_questions(SHEET):
+def user_questions():
     """
     Collect user survey responses and validate inputs.
     """
-    print("Welcome How We Game Survey")
-    questions = {}
+    while True:
+        print("Welcome How We Game Survey")
+        questions = {}
 
-    for key, prompt in QUESTION_PROMPTS.items():
-        while True:
-            if key == 'console_brand':
-                answer = get_user_choice(prompt, VALID_CONSOLE_CHOICES)
-            elif key == 'satisfaction_rating':
-                answer = input(prompt)
-                try:
-                    questions[key] = validate_satisfaction_rating(answer)
-                    break
-                except ValueError as ve:
-                    logging.error(f"ValueError: {ve}")
-                    print(f"Error: {ve}")
-                    print("Please provide valid input.\n")
-                    continue
-            else:
-                answer = get_user_choice(prompt, VALID_CONSOLE_CHOICES)
-            questions[key] = answer
+        for key, prompt in QUESTION_PROMPTS.items():
+            while True:
+                if key == 'console_brand':
+                    answer = get_user_choice(prompt, VALID_CONSOLE_CHOICES)
+                elif key == 'satisfaction_rating':
+                    answer = input(prompt)
+                    try:
+                        questions[key] = validate_satisfaction_rating(answer)
+                        break
+                    except ValueError as ve:
+                        print(f"Error: {ve}")
+                        continue
+                else:
+                    answer = get_user_choice(prompt, VALID_CONSOLE_CHOICES)
+                    questions[key] = answer
+
+                break  # Add a break here to exit the loop after setting the answer
+
+            if key == 'loyalty_choice':
+                while True:
+                    check_answers = input(f"Are you sure these are your final answers? "
+                                          f"Q1){questions.get('console_brand', '')} Q2){questions.get('satisfaction_rating', '')} "
+                                          f"Q3){questions.get('age_group', '')} Q4){questions.get('loyalty_choice', '')} : ")
+
+                    if check_answers.lower() == "yes" or check_answers.lower() == "no":
+                        break
+                    else:
+                        print("Invalid choice. Please enter yes or no.")
+
+                if check_answers.lower() == "yes":
+                    print("Thank you for completing the survey!")
+                    return [LET_TO_CONSOLE.get(questions.get('console_brand', ''), ''),
+                            questions.get('satisfaction_rating', ''),
+                            LET_TO_AGE.get(questions.get('age_group', ''), ''),
+                            LET_TO_LOYALTY.get(questions.get('loyalty_choice', ''), '')]
+                elif check_answers.lower() == "no":
+                    break  # Allow the user to retry if they say "no"
+                else:
+                    raise ValueError("Please select yes or no.")
+
+        another_attempt = input("Do you want to retry the survey? (yes/no): ").lower()
+        if another_attempt != 'yes':
+            print("You have left the system.")
             break
 
-    check_answers = input(f"Are you sure these are your final answers? "
-                         f"Q1){questions['console_brand']} Q2){questions['satisfaction_rating']} "
-                         f"Q3){questions['age_group']} Q4){questions['loyalty_choice']} : ")
+    return None  # Return None in case the loop completes without valid answers for some reason
 
-    if check_answers.lower() == "yes":
-        print("Thank you for completing the survey!")
-        return [LET_TO_CONSOLE[questions['console_brand']], questions['satisfaction_rating'],
-                LET_TO_AGE[questions['age_group']], LET_TO_LOYALTY[questions['loyalty_choice']]]
-    elif check_answers.lower() == "no":
-        return None
-    else:
-        raise ValueError("Please select yes or no.")
-
-def admin_questions(SHEET):
+def admin_questions():
     """
     Admin panel to perform various actions based on user input.
     """
@@ -104,7 +119,8 @@ def admin_questions(SHEET):
         options = {
             'console_count': ('What is the number of users for each console? (yes/no): ', console_count),
             'rating_count': ('How many users gave a rating greater than 5 or less than 5? (yes/no): ', get_rating),
-            'loyalty_count': ('How many users are likely to stay with their current console brand? (yes/no): ', get_loyalty_count)
+            'loyalty_count': ('How many users are likely to stay with their current console brand? (yes/no): ', get_loyalty_count),
+            'export_csv': ('Export survey data to CSV? (yes/no): ', export_to_csv)
         }
 
         for option, (promt, function) in options.items():
@@ -113,14 +129,15 @@ def admin_questions(SHEET):
                 if user_input == 'yes' or user_input == 'no':
                     break
                 else:
-                    handle_invalid_choice
+                    handle_invalid_choice()
             if user_input == 'yes':
-                function(SHEET)
+                function()
+
     except Exception as e:
         print(f"Error: {e}")
         print("An error occurred. Please try again.\n")
 
-def user_login(SHEET):
+def user_login():
     """
     User login to choose between regular user and admin.
     """
@@ -128,24 +145,28 @@ def user_login(SHEET):
         user_type = input("Which user type do you wish to continue with? User or Admin: ").lower()
 
         if user_type == "user":
-            data = user_questions(SHEET)
+            data = user_questions()
             if data is not None:
-                update_worksheet(data, 'submissions', SHEET)
+                update_worksheet(data, 'submissions')
                 print("Survey Submitted Successfully!")
-                export_results_to_csv([data])
-                break
-            else:
-                print("Lets try again.")
+
         elif user_type == "admin":
+            admin_password = input("Enter the admin password: ")
+
             if admin_password == ADMIN_PASSWORD:
-                admin_questions(SHEET)
-                break
+                admin_questions()
             else:
                 print("Incorrect password. Access denied.")
+
         else:
             print("Invalid User. Please select User or Admin.")
 
-def update_worksheet(data, worksheet_name, SHEET):
+        another_attempt = input("Do you want to continue? (yes/no): ").lower()
+        if another_attempt != 'yes':
+            print("You have left the system.")
+            break
+
+def update_worksheet(data, worksheet_name):
     """
     Update the Google Sheet with user responses.
     """
@@ -157,6 +178,7 @@ def update_worksheet(data, worksheet_name, SHEET):
         worksheet_to_update = SHEET.worksheet(worksheet_name)
         worksheet_to_update.append_row(data_with_words)
         print(f"{worksheet_name} Worksheet Updated Successfully\n")
+
     except Exception as e:
         print(f"Error: {e}")
         print("Failed to update worksheet. Please try again.\n")
@@ -175,7 +197,7 @@ def console_count():
         print(f"Error: {e}")
         print("Failed to retrieve console count. Please try again.\n")
 
-def get_rating(SHEET):
+def get_rating():
     """
     Get the count of users with ratings higher or lower than a threshold.
     """
@@ -202,31 +224,39 @@ def get_rating(SHEET):
         print(f"Error: {e}")
         print("Failed to retrieve rating count. Please try again.\n")
 
-def get_loyalty_count(SHEET):
-  """
-  Count the number of users likely to stay with their console choice next purchase (Likely, Neutral, Unlikely)
-  """
-  try:
-      loyalty_column = SHEET.worksheet("submissions").col_values(4)[1:]
+def get_loyalty_count():
+    """
+    Count the number of users likely to stay with their console choice next purchase (Likely, Neutral, Unlikely).
+    """
+    try:
+        loyalty_column = SHEET.worksheet("submissions").col_values(4)[1:]
 
-      likely_count = loyalty_column.count('Likely')
-      neutral_count = loyalty_column.count('Neutral')
-      unlikely_count = loyalty_column.count('Unlikely')
+        for loyalty in set(loyalty_column):
+            count = loyalty_column.count(loyalty)
+            print(f"{LET_TO_LOYALTY.get(loyalty, loyalty)}: {count}")
 
-      print("Number of users likely to stay with their current console brand:")
-      print(f"Likely: {likely_count}")
-      print(f"Neutral: {neutral_count}")
-      print(f"Unlikely: {unlikely_count}")
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Failed to retrieve loyalty count. Please try again.\n")
 
-  except Exception as e:
-      print(f"Error: {e}")
-      print("Failed to retrieve loyalty count. Please try again.\n")
+def export_to_csv():
+    """
+    Export survey data to a CSV file.
+    """
+    try:
+        data = SHEET.worksheet("submissions").get_all_values()
+        headers = data[0]
+        rows = data[1:]
 
+        with open('survey_data.csv', 'w', newline='') as csvfile:
+            csvwriter = csv.writer(csvfile)
+            csvwriter.writerow(headers)
+            csvwriter.writerows(rows)
 
-def main():
-    user_login(SHEET)
-    data = user_questions(SHEET)
-    update_worksheet(data, 'submissions', SHEET)
+        print("Survey data exported to 'survey_data.csv' successfully.")
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Failed to export survey data to CSV. Please try again.\n")
 
 if __name__ == "__main__":
-    main()
+    user_login()
