@@ -96,39 +96,25 @@ def user_questions(SHEET):
             
 
 def admin_questions(SHEET):
-    print("Welcome to How We Game Admin Panel!")
+    """
+    Admin panel to perform various actions based on user input.
+    """
+    try: 
+        options = {
+            'console_count': ('What is the number of users for each console? (yes/no): ', console_count),
+            'rating_count': ('How many users gave a rating greater than 5 or less than 5? (yes/no): ', get_rating),
+            'loyalty_count': ('How many users are likely to stay with their current console brand? (yes/no): ', get_loyalty_count)
+        }
 
-    try:
-        while True:
-            console_count_input = input("1. What is the number of users for each console? (yes/no): ").lower()
-            if console_count_input == "yes" or console_count_input == "no":
-                break
-            else:
-                handle_invalid_choice()
-
-        if console_count_input == "yes":
-            console_count(SHEET)
-
-        while True:
-            rating_count_input = input("2. How many users gave a rating greater than 5 or less than 5? (yes/no): ").lower()
-            if rating_count_input == "yes" or rating_count_input == "no":
-                break
-            else:
-                handle_invalid_choice()
-
-        if rating_count_input == "yes":
-            get_rating(SHEET)
-
-        while True:
-            loyalty_count_input = input("3. How many users are likely to stay with their current console brand? (yes/no): ").lower()
-            if loyalty_count_input == "yes" or loyalty_count_input == "no":
-                break
-            else:
-                handle_invalid_choice()
-
-        if loyalty_count_input == "yes":
-            get_loyalty_count(SHEET)
-
+        for option, (promt, function) in options.items():
+            while True:
+                user_input = input(promt).lower()
+                if user_input == 'yes' or user_input == 'no':
+                    break
+                else: 
+                    handle_invalid_choice
+            if user_input == 'yes':
+                function(SHEET)
     except Exception as e:
         print(f"Error: {e}")
         print("An error occurred. Please try again.\n")
