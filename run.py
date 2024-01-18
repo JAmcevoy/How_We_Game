@@ -15,6 +15,13 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('how_we_game')
 
+QUESTION_PROMPTS = {
+    'console_brand': "What is your preferred gaming console brand? A)Xbox B)PlayStation C)Nintendo D)PC : ",
+    'satisfaction_rating': "On a scale of 1 to 10, how satisfied are you with your current gaming console? (1-10): ",
+    'age_group': "What is your age group? A)18-24 B)25-34 C)35-44 D)45+ : ",
+    'loyalty_choice': "How likely are you to stick with your current gaming console brand for your next purchase? A)Likely B)Neutral C)Unlikely : "
+}
+
 LET_TO_CONSOLE = {'A': 'Xbox', 'B': 'PlayStation', 'C': 'Nintendo', 'D': 'PC'}
 LET_TO_AGE = {'A': '18-24', 'B': '25-34', 'C': '35-44', 'D': '45+'}
 LET_TO_LOYALTY = {'A': 'Likely', 'B': 'Neutral', 'C': 'Unlikely'}
