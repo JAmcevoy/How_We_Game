@@ -47,7 +47,7 @@ def validate_satisfaction_rating(answer):
 
 def get_user_choice(prompt, valid_choices):
     while True:
-        answer = input(prompt).upper().strip()
+        answer = input(prompt).upper().strip() 
         if not answer:
             print("Invalid choice. Please enter a valid choice.")
             continue
@@ -210,7 +210,13 @@ def get_rating():
 
         satisfaction_column = [int(rating) for rating in satisfaction_column]
 
-        high_or_low = input("How many Higher than 5 or lower than 5? (Higher/Lower): ").lower()
+        while True:
+            high_or_low = input("How many Higher than 5 or lower than 5? (Higher/Lower): ").lower()
+
+            if high_or_low in ["higher", "lower"]:
+                break
+            else:
+                print("Invalid Choice. Please choose higher or lower.")
 
         if high_or_low == "higher":
             above_5_count = sum(1 for rating in satisfaction_column if rating > 5)
@@ -218,8 +224,6 @@ def get_rating():
         elif high_or_low == "lower":
             below_5_count = sum(1 for rating in satisfaction_column if rating < 5)
             print(f"Number of users with a rating below 5: {below_5_count}")
-        else:
-            raise ValueError("Invalid Choice. Please choose higher or lower than 5")
     except Exception as e:
         print(f"Error: {e}")
         print("Failed to retrieve rating count. Please try again.\n")
