@@ -46,11 +46,11 @@ def validate_satisfaction_rating(answer):
         raise ValueError(f"Invalid choice for rating. {ve}")
 
 def get_user_choice(prompt, valid_choices):
-    """
-    Get and validate user input based on a prompt and valid choices.
-    """
     while True:
-        answer = input(prompt).upper()
+        answer = input(prompt).upper().strip()
+        if not answer:
+            print("Invalid choice. Please enter a valid choice.")
+            continue
         if answer in valid_choices:
             return answer
         else:
