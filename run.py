@@ -1,6 +1,7 @@
-import csv
 import gspread
 from google.oauth2.service_account import Credentials
+import csv
+from datetime import datetime  # Added for timestamp in CSV export
 
 ADMIN_PASSWORD = 'Letsgame24!'
 VALID_CONSOLE_CHOICES = {'A', 'B', 'C', 'D'}
@@ -46,8 +47,11 @@ def validate_satisfaction_rating(answer):
         raise ValueError(f"Invalid choice for rating. {ve}")
 
 def get_user_choice(prompt, valid_choices):
+    """
+    Get user choice from the given options.
+    """
     while True:
-        answer = input(prompt).upper().strip() 
+        answer = input(prompt).upper().strip()
         if not answer:
             print("Invalid choice. Please enter a valid choice.")
             continue
@@ -109,7 +113,7 @@ def user_questions():
             print("You have left the system.")
             break
 
-    return None 
+    return None
 
 def admin_questions():
     """
@@ -123,9 +127,9 @@ def admin_questions():
             'export_csv': ('Export survey data to CSV? (yes/no): ', export_to_csv)
         }
 
-        for option, (promt, function) in options.items():
+        for option, (prompt, function) in options.items():
             while True:
-                user_input = input(promt).lower()
+                user_input = input(prompt).lower()
                 if user_input == 'yes' or user_input == 'no':
                     break
                 else:
@@ -252,12 +256,15 @@ def export_to_csv():
         headers = data[0]
         rows = data[1:]
 
-        with open('survey_data.csv', 'w', newline='') as csvfile:
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        filename = f'survey_data_{timestamp}.csv'
+
+        with open(filename, 'w', newline='') as csvfile:
             csvwriter = csv.writer(csvfile)
             csvwriter.writerow(headers)
             csvwriter.writerows(rows)
 
-        print("Survey data exported to 'survey_data.csv' successfully.")
+        print(f"Survey data exported to '{filename}' successfully.")
     except Exception as e:
         print(f"Error: {e}")
         print("Failed to export survey data to CSV. Please try again.\n")
