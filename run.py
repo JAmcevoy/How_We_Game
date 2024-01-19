@@ -1,6 +1,6 @@
+import csv
 import gspread
 from google.oauth2.service_account import Credentials
-import csv
 
 ADMIN_PASSWORD = 'Letsgame24!'
 VALID_CONSOLE_CHOICES = {'A', 'B', 'C', 'D'}
@@ -42,8 +42,8 @@ def validate_satisfaction_rating(answer):
         if not (1 <= rating <= 10):
             raise ValueError("Invalid choice for rating. Please choose a number between 1 and 10.")
         return rating
-    except ValueError:
-        raise ValueError("Invalid choice for rating. Please choose a number between 1 and 10.")
+    except ValueError as ve:
+        raise ValueError(f"Invalid choice for rating. {ve}")
 
 def get_user_choice(prompt, valid_choices):
     """
