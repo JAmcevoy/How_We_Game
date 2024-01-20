@@ -61,8 +61,23 @@ def get_user_choice(prompt, valid_choices):
             print(f"Invalid choice. Please choose {', '.join(valid_choices)}.")
 
 def get_console_brand():
+    """
+    Gets the users input for the console question
+    """
     prompt = QUESTION_PROMPTS['console_brand']
     return LET_TO_CONSOLE.get(get_user_choice(prompt, VALID_CONSOLE_CHOICES), '')
+
+def get_satisfaction_rating():
+    """
+    Gets the users input for the rating question
+    """
+    prompt = QUESTION_PROMPTS['satisfaction_rating']
+    while True:
+        answer = input(prompt)
+        try:
+            return validate_satisfaction_rating(answer)
+        except ValueError as ve:
+            print(f"Error: {ve}")
 
 def user_questions():
     """
