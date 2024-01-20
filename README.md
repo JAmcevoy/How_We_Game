@@ -410,6 +410,9 @@ The deployment terminal is set to 80 columns by 24 rows. That means that each li
 
 - For the export of the cvs, I noticed that in the app I cannot export the cvs to download in my browser. I am not sure if this is a requirement for the project but I found it worth mentioning when I test it in codeanywhere the csv file save to my file, this was the same when I tried it in replit.
 - As mentioned above I had a feature to compare the age group and console to find the most popular per age group. I know this feature is no longer included but I found it necessary to bring up as it was a bug I could not fix even though it has been removed from the program.
+- When I print the console count an extra count comes up that is not a console, not really sure why this is happening or where this extra variable is coming from. This bug was left unfix because of my limited time. I tried researching this online but I had no luck find a solution. current at :11. you can a see an example below
+
+![Unfix Bug](docs/images/unfix_bug.JPG)
 
 ## Credits
 
