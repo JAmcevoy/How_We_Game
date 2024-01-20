@@ -67,37 +67,25 @@ The provided code is a Python script that implements a simple survey system rela
 
 - Functions like `handle_invalid_choice` and `validate_satisfaction_rating` handle the validation of user inputs.
 
-![User Input Validation](docs/images/validation_user.JPG)
-
 ### User Login
 
 - The `user_login` function allow the user to choose with panel they want to access admin or user. It also hanlde the exit from the system when user is complete.
-
-![User Login](docs/images/user_login.JPG)
 
 ### User Survey Functions
 
 - The `user_questions` function collects survey responses from users, validates inputs, and updates the Google Sheets document accordingly.
 
-![User Survey Functions](docs/images/user.JPG)
-
 ### Admin Panel Functions
 
 - The `admin_questions` function provides an admin panel to perform various actions based on user input, such as counting users for each console, getting the count of users with ratings above/below a threshold, and counting users likely to stay with their current console brand.
-
-![Admin Panel Functions](docs/images/admin.JPG)
 
 ### Export to CSV
 
 - The script includes a function (`export_results_to_csv`) to export survey results to a CSV file.
 
-![Export to CSV](docs/images/export.JPG)
-
 ### Conditional Execution
 
 - The script includes an `if __name__ == "__main__":` block to ensure that the main function is executed when the script is run.
-
-![Conditional Execution](docs/images/conditional.JPG)
 
 ## Usage
 
@@ -135,6 +123,8 @@ This section provides an overview of the functions used in the provided Python s
   - `data`: List containing user survey data.
   - `worksheet_name`: Name of the Google Sheets worksheet to update.
 
+  ![Update Worksheet](docs/images/update_worksheet.JPG)
+
 ### 2. User Input and Validation
 
 #### `handle_invalid_choice()`
@@ -145,58 +135,89 @@ This section provides an overview of the functions used in the provided Python s
 - **Parameters:**
   - `answer`: User input for satisfaction rating.
 
+  ![User Input Validation](docs/images/validation_user.JPG)
+
 #### `get_user_choice(prompt, valid_choices)`
 - **Description:** Gets and validates user input based on a prompt and valid choices.
 - **Parameters:**
   - `prompt`: Prompt for the user.
   - `valid_choices`: Set of valid choices.
 
+  ![Get User Choices](docs/images/get_user_choice.JPG)
+
 ### 3. User Survey Functions
 
 #### `user_questions()`
 - **Description:** Welcomes the user with a print and displays the user questions then returns the result
 
+![User Survey Functions](docs/images/user.JPG)
+
 #### `get_console_brand()`
 - **Description:** Collects user survey responses for the console brand question.
+
+![Console Brand](docs/images/console_fucntion.JPG)
 
 #### `get_satisfaction_rating()`
 - **Description:** Collects user survey responses for the Satisfaction rating question.
 
+![Satisfaction Rating](docs/images/rating_fucntion.JPG)
+
 #### `get_age_group()`
 - **Description:** Collects user survey responses for the age group question.
+
+![age group](docs/images/age_fucntion.JPG)
 
 #### `get_loyalty_choice()`
 - **Description:** Collects user survey responses for the loyalty choice question.
 
+![Loyalty Choice](docs/images/loyalty_function.JPG)
+
 #### `get_user_confirmation(data)`
 - **Description:** Displays the users choices for each question then ask the user to confirm if they are happy with their answers. if selected no then the survey goes back to the first question.
+
+![User Confirm](docs/images/user_confirm_fucntion.JPG)
 
 ### 4. Admin Panel Functions
 
 #### `admin_questions()`
 - **Description:** Provides an admin panel to perform various actions based on user input.
 
+![Admin Panel Functions](docs/images/admin.JPG)
+
 #### `console_count()`
 - **Description:** Counts the number of users for each gaming console.
+
+![Console Count](docs/images/console_count.JPG)
 
 #### `get_rating()`
 - **Description:** Gets the count of users with satisfaction ratings above or below a specified threshold.
 
+![Count Rating](docs/images/get_rating.JPG)
+
 #### `get_loyalty_count()`
 - **Description:** Counts the number of users likely to stay with their current console brand for the next purchase.
+
+![Loyalty Count](docs/images/get_loyalty.JPG)
 
 #### `export_to_csv()`
 - **Description:** Exports survey data to a CSV file.
 
-### 5. Main Function
+![Export to CSV](docs/images/export.JPG)
+
+### 5. User Login
 
 #### `user_login()`
 - **Description:** Manages user login, allowing users to choose between being a regular user or an admin.
+
+![User Login](docs/images/user_login.JPG)
 
 ### 6. Conditional Execution
 
 #### `__main__`
 - **Description:** Ensures that the main function (`user_login()`) is executed when the script is run.
+
+
+![Conditional Execution](docs/images/conditional.JPG)
 
 
 ## Constants and Configuration: 
