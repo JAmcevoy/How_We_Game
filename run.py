@@ -108,11 +108,6 @@ def user_questions():
                 else:
                     raise ValueError("Please select yes or no.")
 
-        another_attempt = input("Do you want to retry the survey? (yes/no): ").lower()
-        if another_attempt != 'yes':
-            print("You have left the system.")
-            break
-
     return None
 
 def admin_questions():
