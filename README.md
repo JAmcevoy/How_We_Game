@@ -133,7 +133,22 @@ This section provides an overview of the functions used in the provided Python s
 ### 3. User Survey Functions
 
 #### `user_questions()`
-- **Description:** Collects user survey responses, validates inputs, and updates the Google Sheets document accordingly.
+- **Description:** Welcomes the user with a print and displays the user questions then returns the result
+
+#### `get_console_brand()`
+- **Description:** Collects user survey responses for the console brand question.
+
+#### `get_satisfaction_rating()`
+- **Description:** Collects user survey responses for the Satisfaction rating question.
+
+#### `get_age_group()`
+- **Description:** Collects user survey responses for the age group question.
+
+#### `get_loyalty_choice()`
+- **Description:** Collects user survey responses for the loyalty choice question.
+
+#### `get_user_confirmation(data)`
+- **Description:** Displays the users choices for each question then ask the user to confirm if they are happy with their answers. if selected no then the survey goes back to the first question.
 
 ### 4. Admin Panel Functions
 
@@ -168,6 +183,26 @@ This section provides an overview of the functions used in the provided Python s
 - VALID_CONSOLE_CHOICES: Set of valid choices for console preferences.
 
 ## Deployment
+
+This section describes how to create a new repository.
+
+- This repository was created using [GitHub](https://github.com/) The steps are as followed:
+  - I went to the [Code Institute Template](https://github.com/Code-Institute-Org/ci-full-template)
+  - I selected the green button labeled 'Use this template'
+  - Then, Create a new repository.
+  - Then I was brought to a new page to set the name and setting for my new repository.
+  - I named my repository 'How_We_Game'
+
+This section describes how I set up my workspace, Once my repository has been created.
+
+- The workspace I used for this project was [codeanywhere](https://app.codeanywhere.com/). The steps are as follows:
+  - I opened [GitHub](https://github.com/) and went to the 'How_We_Game' repository.
+  - To get the link for codeanywhere I clicked the green button '<>code'.
+  - Here under local, I could copy the link needhttps://github.com/JAmcevoy/How_We_Game.gitS.git>
+  - Then I went to code anywhere.
+  - In workplaces, I selected new workspaces
+  - Here I copied the link from the git hub and clicked to create to make my workspace.
+
 
 ### 1. Create a Heroku App
 
@@ -228,6 +263,83 @@ Congratulations! You have successfully deployed the **How We Game Survey** proje
 
 The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
 
----
+### Features Left to Implement
 
-Happy coding!
+- When I started this project I had an idea for one more admin function get most popular console by age group. This fucntion was suppose to pull and compare the two column from the spread sheet and display the most input console for each age group. However, I couldnt get the function to work each time it ran it display no data because of this I made a decision to remove it form the program. I would like this feature to be added if I had more time but at my current time and knowledge I didn't find it possible.
+
+# Testing
+
+- I tested that this page works in different browsers: Chrome, Firefox, Microsoft Edge, and Safari.
+
+![Chrome](docs/images/chrome.JPG)
+
+![Firefox](docs/images/firefox.JPG)
+
+![Microsoft Edge](docs/images/edge.JPG)
+
+![Safari](docs/images/safari.jpg)
+
+
+### Questions test
+
+#### Aim - My aim in the choice test is to ensure no input besides the predefine choice could be input
+
+### Testing
+
+- Because of the limit of choice and most being answered A, B, C, D not much testing was required.
+
+- There was some text and integer type questions further on so they will also be tested in this section.
+
+    #### User Questions
+    1. I started the survey and logged in as a user.
+    2. I went through the first question a selected a random letter on my keyboard (L, K, H and anyhting that wasn't A, B, C or D)
+            - **Input** = yes 
+           - **Result** = Invalid choice. Please choose B, C, D, A..
+        - **Input** = 43903645 
+            - **Result** = Invalid choice. Please choose B, C, D, A.
+        - **Input** = *Blank* 
+            - **Result** = Invalid choice. Please choose B, C, D, A.
+    3. Because of the error handling I set up for the fucntion the error was flagged and showed which chioce I has and printed the question again.
+    4. The next question required a integer answer so I had to check that the console would not accept letters but also nothing lower that 1 or higher than 10.
+        - **Input** = yes 
+           - **Result** = Error: Invalid choice for rating. invalid literal for int() with base 10: 'yes'
+        - **Input** = 11 and 0
+            - **Result** = Error: Invalid choice for rating. invalid literal for int() with base 10: '11 and 0'
+        - **Input** = *Blank* 
+            - **Result** = Error: Invalid choice for rating. invalid literal for int() with base 10: ''
+    5. Again, due my error handling the console display a message letting me know the correct values to choose.
+    6. The last question were similar to the first two that they were multiple choice so the test method was the same as mentioned in (2.)
+
+    #### Admin Questions
+    1. The first admin question was to pull data from the spreadsheet so I had two factors to test.
+        - Does the console allow me to input incorrect values
+        - Is the data match my spreadsheet
+    2. The answers for all of the admin questions were a simple Yes or No. So, once I got to the first question.
+        - **Input** = Maybe 
+           - **Result** = Invalid choice. Please enter yes or no.
+        - **Input** = 8695 
+            - **Result** = Invalid choice. Please enter yes or no.
+        - **Input** = *Blank* 
+            - **Result** = Invalid choice. Please enter yes or no.
+
+
+### Conclusion
+
+- 
+
+### Validator Testing
+
+- Python
+  - No errors were returned when passing through the official [Python Code Chekcer](https://extendsclass.com/python-tester.html)
+    ![python validator](docs/images/html_val.JPG)
+
+### Bugs I Faced Along The Way
+
+- 
+- 
+- 
+
+### Bugs I did not get to fix
+
+- 
+- 
