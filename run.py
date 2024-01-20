@@ -1,7 +1,7 @@
+import csv
+from datetime import datetime
 import gspread
 from google.oauth2.service_account import Credentials
-import csv
-from datetime import datetime  # Added for timestamp in CSV export
 
 ADMIN_PASSWORD = 'Letsgame24!'
 VALID_CONSOLE_CHOICES = {'A', 'B', 'C', 'D'}
@@ -27,6 +27,7 @@ QUESTION_PROMPTS = {
 LET_TO_CONSOLE = {'A': 'Xbox', 'B': 'PlayStation', 'C': 'Nintendo', 'D': 'PC'}
 LET_TO_AGE = {'A': '18-24', 'B': '25-34', 'C': '35-44', 'D': '45+'}
 LET_TO_LOYALTY = {'A': 'Likely', 'B': 'Neutral', 'C': 'Unlikely'}
+
 
 def handle_invalid_choice():
     """
