@@ -321,11 +321,23 @@ The deployment terminal is set to 80 columns by 24 rows. That means that each li
             - **Result** = Invalid choice. Please enter yes or no.
         - **Input** = *Blank* 
             - **Result** = Invalid choice. Please enter yes or no.
+    3. The error handling I set up for the yes and no questions handled the invalid input and then printed the question again.
+    4. The next question had two part the first part was a ye4s or no answer so the output was the same as (2.) However there wa a second part to this question which ask the admin if they wanted a count of submissions lower or higher that 5
+        - **Input** = yes 
+           - **Result** = Invalid Choice. Please choose higher or lower.
+        - **Input** = 78 
+            - **Result** = Invalid Choice. Please choose higher or lower.
+        - **Input** = *Blank* 
+            - **Result** = Invalid Choice. Please choose higher or lower.
+    5. I noted down the number of submission for each questions then checked the spreadsheet and done a manual count. The numbers matched.
+    6. Another feature of the admin is the option to export the spreadsheet with all submissions to that point. When I selected to export the spreadsheet it worked fine but I had to check all data was there so I compared the exported sheet with the one I am using to write back too.
 
 
 ### Conclusion
 
-- 
+- My conlusion from this testing is that all the error handling I setup for the questions is working correct and will prevent any invalid date from submitting to the spreadsheet.
+- From my testing I can also confirm that the data is in fact submitting to the spreadsheet correctly and is being pulled back correctly too.
+- I can confirm the cvs is exported correctly and hold the correct data to the last submission.
 
 ### Validator Testing
 
