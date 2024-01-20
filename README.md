@@ -311,7 +311,7 @@ Now, both APIs are enabled, and the credentials file is downloaded. In the next 
 
 Ensure the buildpacks are in the correct order: Python on top, and node.js underneath. Adjust the order if needed.
 
-### 3. Deploy from Github
+### 3. Deploy from GitHub
 
 - Go to the "Deploy" tab on your Heroku app dashboard.
 - Choose "Github" as the deployment method.
@@ -368,7 +368,7 @@ The deployment terminal is set to 80 columns by 24 rows. That means that each li
 
     #### User Questions
     1. I started the survey and logged in as a user.
-    2. I went through the first question a selected a random letter on my keyboard (L, K, H and anyhting that wasn't A, B, C or D)
+    2. I went through the first question a selected a random letter on my keyboard (L, K, H and anything that wasn't A, B, C or D)
             - **Input** = yes 
            - **Result** = Invalid choice. Please choose B, C, D, A..
         - **Input** = 43903645 
@@ -398,7 +398,7 @@ The deployment terminal is set to 80 columns by 24 rows. That means that each li
         - **Input** = *Blank* 
             - **Result** = Invalid choice. Please enter yes or no.
     3. The error handling I set up for the yes and no questions handled the invalid input and then printed the question again.
-    4. The next question had two part the first part was a ye4s or no answer so the output was the same as (2.) However there wa a second part to this question which ask the admin if they wanted a count of submissions lower or higher that 5
+    4. The next question had two part the first part was a ye4s or no answer so the output was the same as (2.) However there was a second part to this question which ask the admin if they wanted a count of submissions lower or higher than 5
         - **Input** = yes 
            - **Result** = Invalid Choice. Please choose higher or lower.
         - **Input** = 78 
