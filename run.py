@@ -79,6 +79,15 @@ def get_satisfaction_rating():
         except ValueError as ve:
             print(f"Error: {ve}")
 
+def get_age_group():
+    """
+    Gets the users input for the age group question
+    """
+    prompt = QUESTION_PROMPTS['age_group']
+    return LET_TO_AGE.get(get_user_choice(prompt, list(LET_TO_AGE.keys())), '')
+
+
+
 def user_questions():
     """
     Collect user survey responses and validate inputs.
