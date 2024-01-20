@@ -405,14 +405,15 @@ The deployment terminal is set to 80 columns by 24 rows. That means that each li
 - I had a lot of trouble finding the errors but more importanly knowing how to handle them. The invalid data was a hard issue to find my way around as most of my question we letter or number answers some of them required the user the type in something longer than a letter for example the higher or lower question. I just need to go through each question one by one and keep going till I  got it how I wanted.
 - I struggled a little with some of the indentation in the script. Sometime I had to switch postion of the script or copy logic from one function to another when refactoring which cause the indentation to be a little off but I eventually got the hang of it.
 - Another constant bug was whenever an invalid input was put in sometime it would exit the script or even just roll back to the first question in the section, weather it be admin or user. Using while loop I found a way to repeat the current question when a invalid option has been choosen.
+- When I print the console count an extra count comes up that is not a console, not really sure why this is happening or where this extra variable is coming from. turns out my spreadsheet had some submission with a blank option for console brand. Left in from error testing.
+
+![Unfix Bug](docs/images/unfix_bug.JPG)
 
 ### Bugs I did not get to fix
 
 - For the export of the cvs, I noticed that in the app I cannot export the cvs to download in my browser. I am not sure if this is a requirement for the project but I found it worth mentioning when I test it in codeanywhere the csv file save to my file, this was the same when I tried it in replit.
 - As mentioned above I had a feature to compare the age group and console to find the most popular per age group. I know this feature is no longer included but I found it necessary to bring up as it was a bug I could not fix even though it has been removed from the program.
-- When I print the console count an extra count comes up that is not a console, not really sure why this is happening or where this extra variable is coming from. This bug was left unfix because of my limited time. I tried researching this online but I had no luck find a solution. current at :11. you can a see an example below
 
-![Unfix Bug](docs/images/unfix_bug.JPG)
 
 ## Credits
 
