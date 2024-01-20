@@ -86,7 +86,14 @@ def get_age_group():
     prompt = QUESTION_PROMPTS['age_group']
     return LET_TO_AGE.get(get_user_choice(prompt, list(LET_TO_AGE.keys())), '')
 
+def get_loyalty_choice():
+    """
+    Gets the users input for the loyalty question 
+    """
+    prompt = QUESTION_PROMPTS['loyalty_choice']
+    return LET_TO_LOYALTY.get(get_user_choice(prompt, list(LET_TO_LOYALTY.keys())), '')
 
+def get_user_confirmation(data)
 
 def user_questions():
     """
