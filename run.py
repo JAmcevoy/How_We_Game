@@ -65,50 +65,17 @@ def user_questions():
     Collect user survey responses and validate inputs.
     """
     while True:
-        print("Welcome How We Game Survey")
-        questions = {}
+        print("Welcome to the How We Game Survey")
+        data = {}
 
-        for key, prompt in QUESTION_PROMPTS.items():
-            while True:
-                if key == 'console_brand':
-                    answer = get_user_choice(prompt, VALID_CONSOLE_CHOICES)
-                elif key == 'satisfaction_rating':
-                    answer = input(prompt)
-                    try:
-                        questions[key] = validate_satisfaction_rating(answer)
-                        break
-                    except ValueError as ve:
-                        print(f"Error: {ve}")
-                        continue
-                else:
-                    answer = get_user_choice(prompt, VALID_CONSOLE_CHOICES)
-                    questions[key] = answer
+        data['console_brand'] = get_console_brand()
+        data['satisfaction_rating'] = get_satisfaction_rating()
+        data['age_group'] = get_age_group()
+        data['loyalty_choice'] = get_loyalty_choice()
 
-                break
-
-            if key == 'loyalty_choice':
-                while True:
-                    check_answers = input(f"Are you sure these are your final answers? "
-                                          f"Q1){questions.get('console_brand', '')} Q2){questions.get('satisfaction_rating', '')} "
-                                          f"Q3){questions.get('age_group', '')} Q4){questions.get('loyalty_choice', '')} : ")
-
-                    if check_answers.lower() == "yes" or check_answers.lower() == "no":
-                        break
-                    else:
-                        print("Invalid choice. Please enter yes or no.")
-
-                if check_answers.lower() == "yes":
-                    print("Thank you for completing the survey!")
-                    return [LET_TO_CONSOLE.get(questions.get('console_brand', ''), ''),
-                            questions.get('satisfaction_rating', ''),
-                            LET_TO_AGE.get(questions.get('age_group', ''), ''),
-                            LET_TO_LOYALTY.get(questions.get('loyalty_choice', ''), '')]
-                elif check_answers.lower() == "no":
-                    break  # Allow the user to retry if they say "no"
-                else:
-                    raise ValueError("Please select yes or no.")
-
-    return None
+        result = get_user_confirmation(data)
+        if result:
+            return result
 
 def admin_questions():
     """
