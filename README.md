@@ -1,4 +1,4 @@
-![Terminal](docs/images/)
+![Terminal](docs/images/terminal.JPG)
 
 # Welcome to How We Game
 
@@ -22,6 +22,10 @@
 
 - **User Survey** : Users can participate in the survey by answering questions about their preferred gaming console brand, satisfaction rating, age group, and loyalty choice.
 - **Admin Panel** : Administrators have access to an admin panel where they can perform various actions based on user input. Actions include counting users for each console, analyzing satisfaction ratings, and assessing user loyalty.
+
+## Wirframe Logic for Questions
+![Wirframe Logic](docs/images/Wirframe.JPG)
+
 
 ## Prerequisites
 
@@ -269,16 +273,13 @@ The deployment terminal is set to 80 columns by 24 rows. That means that each li
 
 # Testing
 
-- I tested that this page works in different browsers: Chrome, Firefox, Microsoft Edge, and Safari.
+- I tested that this page works in different browsers: Chrome, Firefox and Microsoft Edge.
 
 ![Chrome](docs/images/chrome.JPG)
 
-![Firefox](docs/images/firefox.JPG)
+![Firefox](docs/images/firfox.JPG)
 
 ![Microsoft Edge](docs/images/edge.JPG)
-
-![Safari](docs/images/safari.jpg)
-
 
 ### Questions test
 
@@ -343,15 +344,27 @@ The deployment terminal is set to 80 columns by 24 rows. That means that each li
 
 - Python
   - No errors were returned when passing through the official [Python Code Chekcer](https://extendsclass.com/python-tester.html)
-    ![python validator](docs/images/html_val.JPG)
+    ![python validator](docs/images/errors.JPG)
 
 ### Bugs I Faced Along The Way
 
-- 
-- 
-- 
+- I had a lot of trouble finding the errors but more importanly knowing how to handle them. The invalid data was a hard issue to find my way around as most of my question we letter or number answers some of them required the user the type in something longer than a letter for example the higher or lower question. I just need to go through each question one by one and keep going till I  got it how I wanted.
+- I struggled a little with some of the indentation in the script. Sometime I had to switch postion of the script or copy logic from one function to another when refactoring which cause the indentation to be a little off but I eventually got the hang of it.
+- Another constant bug was whenever an invalid input was put in sometime it would exit the script or even just roll back to the first question in the section, weather it be admin or user. Using while loop I found a way to repeat the current question when a invalid option has been choosen.
 
 ### Bugs I did not get to fix
 
-- 
-- 
+- For the export of the cvs, I noticed that in the app I cannot export the cvs to download in my browser. I am not sure if this is a requirement for the project but I found it worth mentioning when I test it in codeanywhere the csv file save to my file, this was the same when I tried it in replit.
+- As mentioned above I had a feature to compare the age group and console to find the most popular per age group. I know this feature is no longer included but I found it necessary to bring up as it was a bug I could not fix even though it has been removed from the program.
+
+## Credits
+
+- I used these resources to research and develop my understanding of JavaScript, as well as get inspiration for my own code. During this research, I have borrowed some ideas and modified the code to suit my project. No code was used unedited
+
+### Design
+
+- All the design screenshots from above came from [Wirframe](https://wireframe.cc/)
+
+### Code
+
+- Python Documents was my main point of research for this project here I found all I need to complete this project along with example and explainations on how to use the code. [Python Documentation](https://docs.python.org/3/tutorial/errors.html)
