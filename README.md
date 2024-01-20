@@ -2,6 +2,8 @@
 
 # Welcome to How We Game
 
+[How We Game Survey](https://how-we-game-cf3ccf22f56d.herokuapp.com/)
+
 - This Python script is designed to conduct a gaming survey and manage the administrative tasks associated with the collected data. Users can participate in the survey by providing their gaming preferences, and administrators can perform various actions such as counting users for each console, analyzing satisfaction ratings, and assessing user loyalty.
 
 ### User Survey and Data Collection Module
@@ -53,34 +55,49 @@ The provided code is a Python script that implements a simple survey system rela
 
 - Dictionaries (`LET_TO_CONSOLE`, `LET_TO_AGE`, `LET_TO_LOYALTY`) are used to map user choices (e.g., 'A', 'B') to corresponding labels (e.g., 'Xbox', '25-34', 'Likely').
 
+![Map Of Chocies](docs/images/map_choice.JPG)
+
 ### Question Prompts
 
 - A dictionary named `QUESTION_PROMPTS` stores prompts for various survey questions. Each key in the dictionary corresponds to a question, and the associated value is the prompt.
+
+![Question Prompts](docs/images/question_prom.JPG)
 
 ### User Input Validation
 
 - Functions like `handle_invalid_choice` and `validate_satisfaction_rating` handle the validation of user inputs.
 
+![User Input Validation](docs/images/validation_user.JPG)
+
+### User Login
+
+- The `user_login` function allow the user to choose with panel they want to access admin or user. It also hanlde the exit from the system when user is complete.
+
+![User Login](docs/images/user_login.JPG)
+
 ### User Survey Functions
 
 - The `user_questions` function collects survey responses from users, validates inputs, and updates the Google Sheets document accordingly.
+
+![User Survey Functions](docs/images/user.JPG)
 
 ### Admin Panel Functions
 
 - The `admin_questions` function provides an admin panel to perform various actions based on user input, such as counting users for each console, getting the count of users with ratings above/below a threshold, and counting users likely to stay with their current console brand.
 
+![Admin Panel Functions](docs/images/admin.JPG)
+
 ### Export to CSV
 
 - The script includes a function (`export_results_to_csv`) to export survey results to a CSV file.
 
-### Main Function
-
-- The main function serves as the entry point of the script, calling the `user_login` function to prompt users to choose between a regular user and an admin.
+![Export to CSV](docs/images/export.JPG)
 
 ### Conditional Execution
 
 - The script includes an `if __name__ == "__main__":` block to ensure that the main function is executed when the script is run.
 
+![Conditional Execution](docs/images/conditional.JPG)
 
 ## Usage
 
@@ -188,6 +205,7 @@ This section provides an overview of the functions used in the provided Python s
 
 ## Deployment
 
+## Github
 This section describes how to create a new repository.
 
 - This repository was created using [GitHub](https://github.com/) The steps are as followed:
@@ -199,6 +217,7 @@ This section describes how to create a new repository.
 
 This section describes how I set up my workspace, Once my repository has been created.
 
+## Codeanywhere
 - The workspace I used for this project was [codeanywhere](https://app.codeanywhere.com/). The steps are as follows:
   - I opened [GitHub](https://github.com/) and went to the 'How_We_Game' repository.
   - To get the link for codeanywhere I clicked the green button '<>code'.
@@ -206,6 +225,41 @@ This section describes how I set up my workspace, Once my repository has been cr
   - Then I went to code anywhere.
   - In workplaces, I selected new workspaces
   - Here I copied the link from the git hub and clicked to create to make my workspace.
+
+## Setting Up APIs for Google Spreadsheet Access
+
+### Step 1: Google Cloud Platform
+Navigate to the [Google Cloud Platform](https://console.cloud.google.com/), the hub for developers using Google Cloud services, including Google Sheets. This is where we will configure the necessary APIs.
+
+### Step 2: Create a New Project
+Click on the "Select a project" button, then choose "new project." Provide a name for the project; for example, "loveSandwiches." Click "Select Project" to proceed.
+
+### Step 3: Unique Projects
+Create a new project for each distinct project requiring a Google Cloud API. This ensures unique access credentials for each project.
+
+### Step 4: Enable APIs and Services
+From the side menu, select "APIs and services" and then choose "Library." We need to enable two APIs: Google Drive and Google Sheets.
+
+### Step 5: Enable Google Drive API
+Use the search bar to find and select "Google Drive API." Click "Enable" to activate the API. This action will take you to the API overview page.
+
+### Step 6: Generate Credentials for Google Drive API
+To connect to the Google Drive API, generate credentials by clicking "Create credentials." Select "Google Drive API" in the dropdown, specify usage as "From a web server," and access application data. Choose "No" for the app or computer engine. Click "What credentials do I need?" and proceed to fill out the form with the necessary details:
+
+- From the "Which API are you using?" dropdown menu, choose Google Drive API
+- For the "What data will you be accessing?" question, select Application Data
+- For the "Are you planning to use this API with Compute Engine, Kubernetes Engine, App Engine, or Cloud Functions?" question, select No, I'm not using them
+- Click Next
+
+### Step 7: Service Account and Role Configuration
+Enter a Service Account name, for example, "How_we_game," and click "Create." In the Role Dropdown box, choose Basic > Editor, then press "Continue." You can leave other options blank. Click "Done."
+
+### Step 8: Download Credentials File
+On the next page, click on the Service Account that has been created. Then, click on the "Keys" tab. Click on the "Add Key" dropdown and select "Create New Key." Choose JSON and click "Create." This will trigger the JSON file with your API credentials to download to your machine.
+
+### Step 9: Conclusion
+Now, both APIs are enabled, and the credentials file is downloaded. In the next video, we will set up our development environment to proceed with Python code integration.
+
 
 
 ### 1. Create a Heroku App
