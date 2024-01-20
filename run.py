@@ -60,6 +60,10 @@ def get_user_choice(prompt, valid_choices):
         else:
             print(f"Invalid choice. Please choose {', '.join(valid_choices)}.")
 
+def get_console_brand():
+    prompt = QUESTION_PROMPTS['console_brand']
+    return LET_TO_CONSOLE.get(get_user_choice(prompt, VALID_CONSOLE_CHOICES), '')
+
 def user_questions():
     """
     Collect user survey responses and validate inputs.
