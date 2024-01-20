@@ -2,8 +2,10 @@ import csv
 from datetime import datetime
 import gspread
 from google.oauth2.service_account import Credentials
+import os
 
-ADMIN_PASSWORD = 'Letsgame24!'
+ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD')
+
 VALID_CONSOLE_CHOICES = {'A', 'B', 'C', 'D'}
 
 SCOPE = [
@@ -103,7 +105,7 @@ def get_user_confirmation(data):
                                f"Q1){data['console_brand']} Q2){data['satisfaction_rating']} "
                                f"Q3){data['age_group']} Q4){LET_TO_LOYALTY.get(data['loyalty_choice'], '')} : ")
 
-        check_answers = imput(confirmation_prompt)
+        check_answers = input(confirmation_prompt)
 
         if check_answers.lower() == "yes":
             print("Thank you for completing the survey!")
