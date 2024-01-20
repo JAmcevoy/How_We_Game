@@ -93,7 +93,25 @@ def get_loyalty_choice():
     prompt = QUESTION_PROMPTS['loyalty_choice']
     return LET_TO_LOYALTY.get(get_user_choice(prompt, list(LET_TO_LOYALTY.keys())), '')
 
-def get_user_confirmation(data)
+def get_user_confirmation(data):
+    """
+    Asks the user if they want to confirm their answers to the survey questions
+    """
+    while True:
+        confirmation_prompt = (f"Are you sure these are your final answers? "
+                               f"Q1){data['console_brand']} Q2){data['satisfaction_rating']} "
+                               f"Q3){data['age_group']} Q4){LET_TO_LOYALTY.get(data['loyalty_choice'], '')} : ")
+
+        check_answers = imput(confirmation_prompt)
+
+        if check_answers.lower() == "yes":
+            print("Thank you for completing the survey!")
+            return list(data.values())
+        elif check_answers.lower() == "no":
+            print("Allowing you to retry...")
+            return None
+        else:
+            print("Invalid choice. Please enter yes or no.")
 
 def user_questions():
     """
